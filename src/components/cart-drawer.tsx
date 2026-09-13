@@ -54,7 +54,7 @@ export function CartDrawer() {
 
         <div className="flex-1 overflow-y-auto px-5 py-4">
           {items.length === 0 ? (
-            <p className="text-muted">The ice machine is empty. Steal something from the shop.</p>
+            <p className="text-muted">Bag's empty. Steal something from the shop.</p>
           ) : (
             <ul className="flex flex-col gap-4">
               {items.map(({ product, qty, id }) => (
@@ -107,7 +107,7 @@ export function CartDrawer() {
           </div>
           {sent ? (
             <p className="text-primary">
-              Card declined by the ice machine. This gift shop is a demo — DM
+              Card declined. This gift shop is a demo — DM
               @melondropmotel if you actually want the stuff.
             </p>
           ) : (

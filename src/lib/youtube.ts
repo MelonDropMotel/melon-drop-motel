@@ -50,6 +50,19 @@ function cleanTitle(raw: string) {
   );
 }
 
+function isClipTitle(raw: string) {
+  return /\[\s*MDM\s*CLIPS?\s*\]/i.test(raw);
+}
+
+function isShortEntry(body: string, rawTitle: string, desc: string) {
+  if (/\/shorts\//i.test(body) || /youtube\.com\/shorts\//i.test(body)) return true;
+  if (/#shorts\b/i.test(rawTitle) || /#shorts\b/i.test(desc)) return true;
+  const seconds = body.match(/yt:duration[^>]*seconds="(\d+)"/i)?.[1]
+    ?? body.match(/<yt:duration>(\d+)<\/yt:duration>/i)?.[1];
+  if (seconds && Number(seconds) > 0 && Number(seconds) <= 60) return true;
+  return false;
+}
+
 function episodeFromTitle(rawTitle: string): { title: string; ep: number } | null {
   const stripped = rawTitle
     .replace(/\s*\[[^\]]*(?:MELON\s*DROP|MDM|PODCAST)[^\]]*\]\s*/gi, " ")
@@ -115,11 +128,10 @@ export function mergeFeed(xml: string): ChannelCatalog {
       body.match(/<media:description>([\s\S]*?)<\/media:description>/)?.[1] ??
         "",
     ).trim();
-    const isShort = /\/shorts\//.test(body);
-    const parsed = isShort ? null : episodeFromTitle(rawTitle);
-    if (!isShort && !parsed && /\b(?:live\s*(?:stream|show|nite|night)|livestream|streams?)\b/i.test(rawTitle)) {
-      continue;
-    }
+    const isShort = isShortEntry(body, rawTitle, desc);
+    const isClip = isShort || isClipTitle(rawTitle);
+    const parsed = isClip ? null : episodeFromTitle(rawTitle);
+    if (!isClip && !parsed) continue;
     const hit = known.get(id);
     const date = published ? published.slice(0, 10) : (hit?.date ?? "");
 
@@ -152,7 +164,13 @@ export function mergeFeed(xml: string): ChannelCatalog {
     ...fromFeed.filter((v) => v.kind === "episode"),
     ...archived,
   ];
-  const clips = fromFeed.filter((v) => v.kind === "clip");
+  const clips = [
+    ...fromFeed.filter((v) => v.kind === "clip"),
+    ...CLIPS.filter((c) => !seen.has(c.id)).map((c) => ({
+      ...c,
+      title: cleanTitle(c.title) || c.title,
+    })),
+  ];
   const latest = episodes[0] ?? fromFeed[0] ?? LATEST;
   return { episodes, clips, latest };
 }
@@ -171,6 +189,10 @@ async function pull(fresh = false): Promise<ChannelCatalog> {
   } catch {
     return cache?.data ?? fallback();
   }
+}
+
+export async function loadChannelCatalog(fresh = false) {
+  return pull(fresh);
 }
 
 export const getChannelVideos = createServerFn({ method: "GET" })

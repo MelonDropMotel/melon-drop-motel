@@ -12,44 +12,38 @@ export const Route = createFileRoute("/live")({
   component: Live,
 });
 
-function twitchPlayerSrc(channel: string, live: boolean) {
-  const hosts = new Set<string>([
-    "localhost",
-    "grok.com",
-    "www.grok.com",
-    "grok-sandbox.com",
-    "wixsite.com",
-    "www.wixsite.com",
-    "editor.wix.com",
-    "wix.com",
-  ]);
+function twitchPlayerSrc(channel: string) {
+  const hosts = new Set<string>();
   const addHost = (raw: string) => {
-    const host = raw.replace(/^www\./, "").toLowerCase();
+    let host = raw.trim().toLowerCase();
     if (!host) return;
-    if (/^\d+\.\d+\.\d+\.\d+$/.test(host) || host === "[::1]") {
-      hosts.add(host);
+    try {
+      if (host.includes("://")) host = new URL(host).hostname;
+    } catch {
+      return;
+    }
+    host = host.replace(/:\d+$/, "").replace(/^www\./, "");
+    if (!host || host === "null") return;
+    if (host === "[::1]" || /^\d+\.\d+\.\d+\.\d+$/.test(host)) {
       hosts.add("localhost");
       return;
     }
     hosts.add(host);
-    if (host.endsWith(".grok-sandbox.com")) hosts.add("grok-sandbox.com");
-    if (host.endsWith(".grok.com")) hosts.add("grok.com");
-    if (host.endsWith(".wixsite.com")) hosts.add("wixsite.com");
+    hosts.add(`www.${host}`);
   };
 
   addHost(window.location.hostname);
+  addHost(window.location.host);
   try {
     const ancestors = window.location.ancestorOrigins;
     if (ancestors) {
-      for (let i = 0; i < ancestors.length; i++) {
-        addHost(new URL(ancestors[i]).hostname);
-      }
+      for (let i = 0; i < ancestors.length; i++) addHost(ancestors[i]);
     }
   } catch {
     /* ignore */
   }
   try {
-    if (document.referrer) addHost(new URL(document.referrer).hostname);
+    if (document.referrer) addHost(document.referrer);
   } catch {
     /* ignore */
   }
@@ -57,18 +51,18 @@ function twitchPlayerSrc(channel: string, live: boolean) {
   const parents = [...hosts]
     .map((h) => `parent=${encodeURIComponent(h)}`)
     .join("&");
-  return `https://player.twitch.tv/?channel=${channel}&${parents}&autoplay=${live ? "true" : "false"}&muted=true`;
+  return `https://player.twitch.tv/?channel=${encodeURIComponent(channel)}&${parents}&autoplay=true&muted=true`;
 }
 
-function TwitchPlayer({ live }: { live: boolean }) {
+function TwitchPlayer() {
   const [src, setSrc] = useState("");
 
   useEffect(() => {
-    setSrc(twitchPlayerSrc(SITE.twitchHandle, live));
-  }, [live]);
+    setSrc(twitchPlayerSrc(SITE.twitchHandle));
+  }, []);
 
   return (
-    <div className="crt-bezel">
+    <div className="crt-bezel relative z-[12]">
       <div className="crt-screen">
         {src ? (
           <iframe
@@ -77,6 +71,8 @@ function TwitchPlayer({ live }: { live: boolean }) {
             className="absolute inset-0 h-full w-full border-0"
             allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
             allowFullScreen
+            referrerPolicy="origin"
+            scrolling="no"
           />
         ) : null}
       </div>
@@ -149,7 +145,7 @@ function Live() {
         </div>
 
         <div className="mt-5">
-          <TwitchPlayer live={twitch.live} />
+          <TwitchPlayer />
         </div>
 
         <div className="mt-4 flex flex-wrap gap-3">
@@ -208,8 +204,8 @@ function Live() {
 
       <section className="relative overflow-hidden shadow-border">
         <img
-          src="/images/ice-machine.jpg"
-          alt="Motel ice machine in a night breezeway"
+          src="/images/motel-night.jpg"
+          alt="Motel breezeway at night"
           className="h-64 w-full object-cover"
         />
         <div className="absolute inset-0 bg-bg/60" />

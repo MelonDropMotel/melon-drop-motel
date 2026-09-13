@@ -17,7 +17,7 @@ function Shop() {
           No signal
         </h1>
         <p className="mt-4 max-w-md text-xl text-fg">
-          The store is empty. The ice machine ate the inventory.
+          The store is empty. Come back when the clerk finds the key.
         </p>
       </div>
     </section>

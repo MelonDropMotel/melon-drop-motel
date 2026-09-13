@@ -1,23 +1,21 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @theme {
-  --color-bg: #0d0b0c;
-  --color-surface: #1a1416;
-  --color-fg: #f3ebe3;
-  --color-muted: #9a8b86;
-  --color-primary: #ff4b6e;
+  --font-sans: "VT323", "Courier New", ui-monospace, monospace;
   --font-display: "Bebas Neue", "Arial Narrow", Impact, sans-serif;
   --font-mono: "VT323", "Courier New", ui-monospace, monospace;
-  --radius-sm: 0.125rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1.25rem;
-  --shadow-border: 0 0 0 1px rgb(243 235 227 / 0.1);
-  --shadow-border-hover: 0 0 0 1px rgb(255 75 110 / 0.55);
-  --shadow-crt:
-    inset 0 0 40px rgb(0 0 0 / 0.55),
-    inset 0 0 80px rgb(255 75 110 / 0.08),
-    0 0 0 1px rgb(243 235 227 / 0.08);
+  --color-bg: #0d0b0c;
+  --color-fg: #f3ebe3;
+  --color-primary: #ff4b6e;
+  --color-muted: #9a8b86;
+  --color-surface: #1a1416;
+  --radius-lg: 0.35rem;
+  --radius-xl: 0.5rem;
+  --shadow-border: 0 0 0 1px #f3ebe31a;
+  --shadow-border-hover: 0 0 0 1px #ff4b6e8c;
+  --shadow-crt: inset 0 0 40px #0000008c, inset 0 0 80px #ff4b6e14,
+    0 0 0 1px #f3ebe314;
 }
 
 @layer base {
@@ -27,10 +25,9 @@
   }
 
   html,
-  body,
-  #app {
-    min-height: 100%;
+  body {
     background: var(--color-bg);
+    min-height: 100%;
     color: var(--color-fg);
   }
 
@@ -53,14 +50,9 @@
     text-wrap: pretty;
   }
 
-  button:not(:disabled),
-  [role="button"]:not(:disabled) {
-    cursor: pointer;
-  }
-
   img {
-    outline: 1px solid rgb(243 235 227 / 0.1);
     outline-offset: -1px;
+    outline: 1px solid #f3ebe31a;
   }
 
   img.mark {
@@ -78,8 +70,7 @@
 
   @media (pointer: fine) {
     html,
-    body,
-    #app {
+    body {
       cursor: url("/images/cursor-melon.png") 1 1, auto;
     }
 
@@ -92,133 +83,186 @@
       cursor: url("/images/cursor-melon.png") 1 1, pointer;
     }
   }
+}
 
-  :is(a, button, [role="button"], summary) {
-    position: relative;
-    transition: transform 180ms ease-out;
-  }
+:is(a, button, [role="button"], summary):not(.quiet) {
+  transition: transform 0.18s ease-out;
+  position: relative;
+}
 
-  :is(a, button, [role="button"], summary):hover {
-    z-index: 4;
-    transform: scale(1.035);
-  }
+:is(a, button, [role="button"], summary):not(.quiet):hover {
+  z-index: 4;
+  transform: scale(1.035);
+}
 
-  :is(a, button, [role="button"], summary)::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-    pointer-events: none;
-    background-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgb(255 75 110 / 0.05) 42%,
-      rgb(243 235 227 / 0.16) 50%,
-      rgb(80 200 110 / 0.06) 58%,
-      transparent 100%
-    );
-    background-repeat: no-repeat;
-    background-size: 100% 14px;
-    background-position: 0 140%;
-    mix-blend-mode: screen;
-    filter: contrast(1.35) saturate(1.15);
+:is(a, button, [role="button"], summary):not(.quiet)::after {
+  content: "";
+  z-index: 3;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: contrast(1.35) saturate(1.15);
+  opacity: 0;
+  background-image: linear-gradient(
+    #0000 0%,
+    #ff4b6e0d 42%,
+    #f3ebe329 50%,
+    #50c86e0f 58%,
+    #0000 100%
+  );
+  background-position: 0 140%;
+  background-repeat: no-repeat;
+  background-size: 100% 14px;
+  position: absolute;
+  inset: 0;
+}
+
+:is(a, button, [role="button"], summary):not(.quiet):hover::after {
+  animation: 0.7s ease-out scan-rise;
+}
+
+@keyframes scan-rise {
+  0% {
     opacity: 0;
+    background-position: 0 115%;
   }
-
-  :is(a, button, [role="button"], summary):hover::after {
-    animation: scan-rise 0.7s ease-out;
+  12% {
+    opacity: 0.85;
+  }
+  to {
+    opacity: 0;
+    background-position: 0 -25%;
   }
 }
 
 @layer components {
-  .scanlines {
-    position: relative;
-  }
-
-  .scanlines::before {
-    content: "";
-    pointer-events: none;
-    z-index: 10;
-    background: radial-gradient(transparent 58%, rgb(0 0 0 / 0.32) 100%);
-    position: fixed;
-    inset: 0;
-  }
-
-  .scanlines::after {
-    content: "";
-    pointer-events: none;
-    z-index: 11;
-    opacity: 0.1;
-    background: repeating-linear-gradient(
-      to bottom,
-      transparent 0 2px,
-      rgb(0 0 0 / 0.5) 2px 3px
-    );
-    position: fixed;
-    inset: 0;
-  }
-
-  .crt-bezel {
-    background: var(--color-surface);
-    border-radius: var(--radius-xl);
-    padding: 0.7rem;
-    box-shadow:
-      var(--shadow-border),
-      0 18px 40px rgb(0 0 0 / 0.45),
-      inset 0 1px 0 rgb(243 235 227 / 0.08);
-  }
-
-  .crt-screen {
-    position: relative;
-    overflow: hidden;
-    border-radius: var(--radius-lg);
-    background: #050405;
-    box-shadow: var(--shadow-crt);
-    aspect-ratio: 16 / 9;
-  }
-
-  .chromatic {
-    text-shadow: 2px 0 color-mix(in oklab, var(--color-primary) 70%, transparent);
-  }
-
-  .ticker {
-    display: flex;
-    width: max-content;
-    animation: ticker 40s linear infinite;
-    will-change: transform;
-  }
-
-  .noise-burst {
-    position: fixed;
-    inset: 0;
-    z-index: 40;
-    pointer-events: none;
-    background:
-      url("/images/noise.svg"),
-      repeating-linear-gradient(
-        to bottom,
-        rgb(243 235 227 / 0.18) 0 1px,
-        transparent 1px 3px
-      );
-    mix-blend-mode: screen;
-    opacity: 0.55;
-    animation: static-flicker 280ms steps(2) both;
-  }
-
   .hud-label {
     font-family: var(--font-mono);
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    font-size: 0.95rem;
     color: var(--color-muted);
+    font-size: 0.95rem;
+  }
+
+  .font-display {
+    font-family: var(--font-display);
   }
 }
 
-@layer utilities {
-  .tap-44 {
-    min-height: 44px;
-    min-width: 44px;
+.tap-44 {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.rec-dot {
+  animation: 1.2s step-end infinite rec-blink;
+}
+
+@keyframes rec-blink {
+  0%,
+  49% {
+    opacity: 1;
   }
+  50%,
+  to {
+    opacity: 0.15;
+  }
+}
+
+.boot-copy {
+  animation: 0.5s ease-out both boot-in;
+}
+
+@keyframes boot-in {
+  0% {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.scanlines {
+  position: relative;
+}
+
+.scanlines::before {
+  content: "";
+  pointer-events: none;
+  z-index: 10;
+  background: radial-gradient(#0000 58%, #00000052 100%);
+  position: fixed;
+  inset: 0;
+}
+
+.scanlines::after {
+  content: "";
+  pointer-events: none;
+  z-index: 11;
+  opacity: 0.1;
+  background: repeating-linear-gradient(#0000 0 2px, #00000080 2px 3px);
+  position: fixed;
+  inset: 0;
+}
+
+.crt-bezel {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: 0.7rem;
+  box-shadow:
+    var(--shadow-border),
+    0 18px 40px #00000073,
+    inset 0 1px 0 #f3ebe314;
+}
+
+.crt-screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: #050405;
+  box-shadow: var(--shadow-crt);
+  aspect-ratio: 16 / 9;
+}
+
+.chromatic {
+  text-shadow: 2px 0 #ff4b6eb3;
+}
+
+@supports (color: color-mix(in lab, red, red)) {
+  .chromatic {
+    text-shadow: 2px 0 color-mix(in oklab, var(--color-primary) 70%, transparent);
+  }
+}
+
+.tape-range {
+  appearance: none;
+  height: 4px;
+  background: color-mix(in oklab, var(--color-fg) 18%, transparent);
+  outline: none;
+}
+
+.tape-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--color-primary);
+}
+
+.tape-range::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  background: var(--color-primary);
+}
+
+.ticker {
+  display: flex;
+  width: max-content;
+  animation: ticker 40s linear infinite;
+  will-change: transform;
 }
 
 @keyframes ticker {
@@ -228,6 +272,19 @@
   to {
     transform: translateX(-50%);
   }
+}
+
+.noise-burst {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.55;
+  background:
+    url("/images/noise.svg"),
+    repeating-linear-gradient(#f3ebe32e 0 1px, #0000 1px 3px);
+  animation: 0.28s steps(2, end) both static-flicker;
 }
 
 @keyframes static-flicker {
@@ -240,78 +297,84 @@
   60% {
     opacity: 0.25;
   }
-  100% {
+  to {
     opacity: 0;
   }
 }
 
-@keyframes rec-blink {
-  0%,
-  49% {
-    opacity: 1;
-  }
-  50%,
-  100% {
-    opacity: 0.15;
-  }
+.wiki-tv {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: #050405;
+  box-shadow: var(--shadow-crt);
 }
 
-@keyframes boot-in {
+.wiki-paper {
+  background: var(--color-fg);
+  color: #1a1214;
+  overflow: hidden;
+}
+
+.wiki-print {
+  animation: wiki-print 0.65s ease-out both;
+}
+
+@keyframes wiki-print {
   from {
     opacity: 0;
-    filter: blur(4px);
-    transform: translateY(10px);
+    transform: scale(0.96) translateY(10px);
+    filter: brightness(1.6);
   }
   to {
     opacity: 1;
-    filter: blur(0);
-    transform: translateY(0);
+    transform: none;
+    filter: none;
   }
 }
 
-@keyframes scan-rise {
-  0% {
-    background-position: 0 115%;
-    opacity: 0;
+.wiki-masthead {
+  font-family: var(--font-display), Impact, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.wiki-rule {
+  border: 0;
+  border-top: 2px solid #1a1214;
+  border-bottom: 1px solid #1a1214;
+  height: 4px;
+}
+
+.wiki-cols {
+  column-count: 2;
+  column-gap: 1.25rem;
+  text-align: justify;
+}
+
+.wiki-halftone {
+  filter: grayscale(1) contrast(1.4) brightness(0.95);
+}
+
+@media (max-width: 640px) {
+  .wiki-cols {
+    column-count: 1;
   }
-  12% {
-    opacity: 0.85;
+}
+
+.wiki-board {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-inline: auto;
+  image-rendering: auto;
+  cursor: url("/images/cursor-melon.png") 1 1, pointer;
+}
+
+@media (min-width: 768px) {
+  .wiki-board {
+    max-height: none;
   }
-  100% {
-    background-position: 0 -25%;
-    opacity: 0;
-  }
-}
-
-.boot-copy {
-  animation: boot-in 0.5s ease-out both;
-}
-
-.stagger-in > * {
-  opacity: 0;
-  filter: blur(4px);
-  transform: translateY(12px);
-  animation: boot-in 0.42s ease-out forwards;
-}
-
-.stagger-in > :first-child {
-  animation-delay: 0s;
-}
-.stagger-in > :nth-child(2) {
-  animation-delay: 90ms;
-}
-.stagger-in > :nth-child(3) {
-  animation-delay: 180ms;
-}
-.stagger-in > :nth-child(4) {
-  animation-delay: 270ms;
-}
-.stagger-in > :nth-child(5) {
-  animation-delay: 360ms;
-}
-
-.rec-dot {
-  animation: rec-blink 1.2s steps(1) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -320,20 +383,7 @@
   .noise-burst,
   .rec-dot,
   .boot-copy,
-  .stagger-in > *,
-  :is(a, button, [role="button"], summary)::after,
-  :is(a, button, [role="button"], summary):hover {
+  .wiki-print {
     animation: none !important;
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
-
-  .scanlines::after {
-    opacity: 0.12;
-  }
-
-  :is(a, button, [role="button"], summary)::after {
-    opacity: 0;
   }
 }

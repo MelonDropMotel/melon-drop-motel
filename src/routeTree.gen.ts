@@ -16,6 +16,7 @@ import { Route as DeskRouteImport } from './routes/desk'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as WatchRouteImport } from './routes/watch'
+import { Route as WikiRouteImport } from './routes/wiki'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +53,11 @@ const WatchRoute = WatchRouteImport.update({
   path: '/watch',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WikiRoute = WikiRouteImport.update({
+  id: '/wiki',
+  path: '/wiki',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/live': typeof LiveRoute
   '/shop': typeof ShopRoute
   '/watch': typeof WatchRoute
+  '/wiki': typeof WikiRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByTo {
   '/live': typeof LiveRoute
   '/shop': typeof ShopRoute
   '/watch': typeof WatchRoute
+  '/wiki': typeof WikiRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,14 +88,39 @@ export interface FileRoutesById {
   '/live': typeof LiveRoute
   '/shop': typeof ShopRoute
   '/watch': typeof WatchRoute
+  '/wiki': typeof WikiRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$' | '/about' | '/desk' | '/live' | '/shop' | '/watch'
+  fullPaths:
+    | '/'
+    | '/$'
+    | '/about'
+    | '/desk'
+    | '/live'
+    | '/shop'
+    | '/watch'
+    | '/wiki'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$' | '/about' | '/desk' | '/live' | '/shop' | '/watch'
+  to:
+    | '/'
+    | '/$'
+    | '/about'
+    | '/desk'
+    | '/live'
+    | '/shop'
+    | '/watch'
+    | '/wiki'
   id:
-    '__root__' | '/' | '/$' | '/about' | '/desk' | '/live' | '/shop' | '/watch'
+    | '__root__'
+    | '/'
+    | '/$'
+    | '/about'
+    | '/desk'
+    | '/live'
+    | '/shop'
+    | '/watch'
+    | '/wiki'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -98,6 +131,7 @@ export interface RootRouteChildren {
   LiveRoute: typeof LiveRoute
   ShopRoute: typeof ShopRoute
   WatchRoute: typeof WatchRoute
+  WikiRoute: typeof WikiRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -137,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LiveRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pack': {
+      id: '/pack'
+      path: '/pack'
+      fullPath: '/pack'
+      preLoaderRoute: typeof PackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shop': {
       id: '/shop'
       path: '/shop'
@@ -151,6 +192,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WatchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/wiki': {
+      id: '/wiki'
+      path: '/wiki'
+      fullPath: '/wiki'
+      preLoaderRoute: typeof WikiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -162,6 +210,7 @@ const rootRouteChildren: RootRouteChildren = {
   LiveRoute: LiveRoute,
   ShopRoute: ShopRoute,
   WatchRoute: WatchRoute,
+  WikiRoute: WikiRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

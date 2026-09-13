@@ -91,6 +91,7 @@ async function pull(fresh = false): Promise<TwitchChannel> {
       headers: {
         "Client-ID": CLIENT_ID,
         "Content-Type": "application/json",
+        "X-Device-Id": "melon-drop-motel",
       },
       body: JSON.stringify({
         query: QUERY,

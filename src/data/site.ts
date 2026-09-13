@@ -1,6 +1,7 @@
 export const SITE = {
   name: "Melon Drop Motel",
   short: "MDM",
+  url: "https://melondropmotel.com",
   tagline: "Just two idiots, polluting the internet.",
   altTagline: "Two scumbags. One motel TV. Weekly tapes.",
   description:
@@ -10,11 +11,14 @@ export const SITE = {
   youtubeHandle: "@MelonDropPod",
   youtubeUrl: "https://www.youtube.com/@MelonDropPod",
   youtubeChannelId: "UCC4O3kbiiC3uujMVyhd2gqQ",
+  podcastRss: "https://anchor.fm/s/1170a405c/podcast/rss",
+  spotifyUrl: "https://open.spotify.com/show/0WCpWEgDWCPSxWlxq6PpRa",
   email: "mdmpod69@gmail.com",
   twitchHandle: "melondropmotel",
   twitchUrl: "https://www.twitch.tv/melondropmotel",
   socials: [
     { label: "YouTube", href: "https://www.youtube.com/@MelonDropPod" },
+    { label: "Spotify", href: "https://open.spotify.com/show/0WCpWEgDWCPSxWlxq6PpRa" },
     { label: "Twitch", href: "https://www.twitch.tv/melondropmotel" },
     { label: "Instagram", href: "https://www.instagram.com/melondropmotel/" },
     { label: "X", href: "https://x.com/melondropmotel" },
@@ -26,6 +30,7 @@ export const SITE = {
 export const NAV = [
   { label: "LOBBY", to: "/" },
   { label: "WATCH", to: "/watch" },
+  { label: "WIKI", to: "/wiki" },
   { label: "WHO", to: "/about" },
   { label: "LIVE", to: "/live" },
   { label: "SHOP", to: "/shop" },

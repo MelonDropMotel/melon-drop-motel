@@ -7,8 +7,8 @@ function NotFound() {
   return (
     <div className="relative overflow-hidden shadow-border">
       <img
-        src="/images/ice-machine.jpg"
-        alt="Ice machine in a motel breezeway"
+        src="/images/motel-night.jpg"
+        alt="Motel breezeway at night"
         className="h-[min(70vh,640px)] w-full object-cover"
       />
       <div className="absolute inset-0 bg-bg/70" />
@@ -20,7 +20,7 @@ function NotFound() {
         />
         <p className="hud-label text-primary">NO SIGNAL · ROOM 404</p>
         <h1 className="mt-2 font-display text-6xl tracking-[0.08em] chromatic sm:text-8xl">
-          Ice machine ate it
+          Wrong room
         </h1>
         <p className="mt-3 max-w-md text-muted">
           That page doesn't come in. The clerk shrugged.

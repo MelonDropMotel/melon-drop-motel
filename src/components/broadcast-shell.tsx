@@ -169,9 +169,9 @@ export function BroadcastShell({ children }: { children: React.ReactNode }) {
       <BootSequence />
       <StaticBurst />
 
-      <header className="sticky top-0 z-20 overflow-hidden border-b border-fg/10 bg-bg/95">
-        <div className="mx-auto flex max-w-6xl items-center gap-2 px-3 py-1.5">
-          <Link to="/" className="flex shrink-0 items-center gap-2 py-1 pr-2">
+      <header className="sticky top-0 z-20 overflow-x-clip border-b border-fg/10 bg-bg/95">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-2 px-3 py-2">
+          <Link to="/" className="flex h-12 shrink-0 items-center gap-2 py-1 pr-2">
             <img
               src="/images/mark.png"
               alt=""
@@ -182,20 +182,18 @@ export function BroadcastShell({ children }: { children: React.ReactNode }) {
             </span>
           </Link>
 
-          <nav
-            className="hidden min-w-0 flex-1 flex-nowrap items-center justify-end md:flex"
-            aria-label="Menu"
-          >
-            {NAV.map((c) => (
-              <NavLink key={c.to} {...c} />
-            ))}
-          </nav>
-
-          <span className="hidden shrink-0 items-center gap-3 pl-2 text-sm tracking-[0.16em] text-primary lg:flex">
-            <span className="rec-dot size-2 rounded-full bg-primary" />
-            <span>VACANCY</span>
-            <span className="tabular-nums text-muted">{clock || "--:--:--"}</span>
-          </span>
+          <div className="ml-auto hidden min-w-max items-center md:flex">
+            <nav className="flex items-center justify-end" aria-label="Menu">
+              {NAV.map((c) => (
+                <NavLink key={c.to} {...c} />
+              ))}
+            </nav>
+            <span className="hidden shrink-0 items-center gap-3 pl-2 text-sm tracking-[0.16em] text-primary lg:flex">
+              <span className="rec-dot size-2 rounded-full bg-primary" />
+              <span>VACANCY</span>
+              <span className="tabular-nums text-muted">{clock || "--:--:--"}</span>
+            </span>
+          </div>
         </div>
       </header>
 

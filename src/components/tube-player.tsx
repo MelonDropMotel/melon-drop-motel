@@ -43,7 +43,7 @@ export function TubePlayer({ video, autoPlay = false, className }: Props) {
           <button
             type="button"
             onClick={() => setPlaying(true)}
-            className="absolute inset-0 h-full w-full"
+            className="quiet absolute inset-0 h-full w-full"
             aria-label={`Play ${video.title}`}
           >
             <img

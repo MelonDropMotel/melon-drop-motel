@@ -142,7 +142,43 @@ function authPopupPlugin(): Plugin {
   };
 }
 
-// `0.0.0.0:8080` is the live-preview contract — don't change host/port.
+function sitemapPlugin(): Plugin {
+  return {
+    name: "mdm-sitemap",
+    apply: "serve",
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        const pathOnly = (req.url ?? "").split("?", 1)[0] ?? "";
+        if (pathOnly !== "/sitemap.xml") {
+          next();
+          return;
+        }
+        if ((req.method ?? "GET").toUpperCase() !== "GET") {
+          next();
+          return;
+        }
+        try {
+          const mod = (await server.ssrLoadModule("/src/lib/sitemap.ts")) as {
+            buildSitemapXml: () => Promise<string>;
+          };
+          const xml = await mod.buildSitemapXml();
+          res.statusCode = 200;
+          res.setHeader("content-type", "application/xml; charset=utf-8");
+          res.setHeader("cache-control", "public, max-age=300");
+          res.end(xml);
+        } catch (err) {
+          const msg = err instanceof Error ? err.stack || err.message : String(err);
+          console.error("[sitemap] failed:", msg);
+          if (!res.headersSent) {
+            res.statusCode = 500;
+            res.setHeader("content-type", "text/plain; charset=utf-8");
+            res.end(msg);
+          }
+        }
+      });
+    },
+  };
+}
 // The dev server starts once `src/router.tsx` and `src/routes/` exist — see
 // AGENTS.md § "First scaffold".
 export default defineConfig(({ command, isPreview }) => ({
@@ -161,6 +197,7 @@ export default defineConfig(({ command, isPreview }) => ({
     pgliteBootstrapPlugin(),
     // Before tanstackStart so /auth/popup never falls through to the SPA.
     authPopupPlugin(),
+    sitemapPlugin(),
     // Dev-only /__app-env, read by scripts/check-auth-invariant.mjs.
     appEnvPlugin(),
     // PWA head + ?install=1 tutorial page; runs before Start/Nitro.
