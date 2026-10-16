@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { SITE } from "@/data/site";
+import { EPISODES, SITE } from "@/data/site";
 
 export type Tape = {
   id: string;
@@ -17,9 +17,9 @@ const TTL_MS = 5 * 60 * 1000;
 let cache: { at: number; data: Tape[] } | null = null;
 
 function decode(s: string) {
-  return s.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1").replace(
-    /&(#x[0-9a-fA-F]+|#\d+|[a-z]+);/g,
-    (_, name: string) => {
+  return s
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
+    .replace(/&(#x[0-9a-fA-F]+|#\d+|[a-z]+);/g, (_, name: string) => {
       if (name === "amp") return "&";
       if (name === "lt") return "<";
       if (name === "gt") return ">";
@@ -32,21 +32,16 @@ function decode(s: string) {
         return String.fromCharCode(Number(name.slice(1)));
       }
       return name;
-    },
-  );
+    });
 }
 
 function tag(block: string, name: string) {
-  const m = block.match(
-    new RegExp(`<${name}(?:\\s[^>]*)?>([\\s\\S]*?)</${name}>`, "i"),
-  );
+  const m = block.match(new RegExp(`<${name}(?:\\s[^>]*)?>([\\s\\S]*?)</${name}>`, "i"));
   return decode((m?.[1] ?? "").trim());
 }
 
 function attr(block: string, name: string, key: string) {
-  const m = block.match(
-    new RegExp(`<${name}[^>]*\\s${key}="([^"]+)"`, "i"),
-  );
+  const m = block.match(new RegExp(`<${name}[^>]*\\s${key}="([^"]+)"`, "i"));
   return m?.[1] ?? "";
 }
 
@@ -77,6 +72,30 @@ export function formatTapeClock(sec: number) {
   return clock(sec);
 }
 
+function titleKey(s: string) {
+  return s.toLowerCase().replace(/[^a-z0-9*]+/g, "");
+}
+
+function matchEpisode(title: string) {
+  const key = titleKey(title);
+  if (!key) return undefined;
+  return EPISODES.find((v) => {
+    const k = titleKey(v.title);
+    if (k === key) return true;
+    // Censored YouTube titles ("Sh*t") vs uncensored audio titles ("Shit").
+    if (!k.includes("*")) return false;
+    const re = new RegExp(
+      "^" +
+        k
+          .split("*")
+          .map((p) => p.replace(/[.+?^${}()|[\]\\]/g, "\\$&"))
+          .join("[a-z0-9]*") +
+        "$",
+    );
+    return re.test(key);
+  });
+}
+
 export function parsePodcastFeed(xml: string): Tape[] {
   const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)];
   const tapes: Tape[] = [];
@@ -100,15 +119,23 @@ export function parsePodcastFeed(xml: string): Tape[] {
       pageUrl: stripHtml(tag(body, "link")),
     });
   }
+  // Match each tape to its YouTube episode so numbers, titles and air dates
+  // follow the real episode, not the feed position or re-upload date.
+  for (const t of tapes) {
+    const hit = matchEpisode(t.title);
+    if (!hit) continue;
+    t.ep = hit.ep;
+    t.title = hit.title;
+    if (hit.date) t.date = hit.date;
+  }
   tapes.sort((a, b) => {
-    const d = (a.date || "").localeCompare(b.date || "");
+    const e = (b.ep ?? 0) - (a.ep ?? 0);
+    if (e) return e;
+    const d = (b.date || "").localeCompare(a.date || "");
     if (d) return d;
     return a.id.localeCompare(b.id);
   });
-  tapes.forEach((t, i) => {
-    t.ep = i + 1;
-  });
-  return tapes.reverse();
+  return tapes;
 }
 
 async function pull(fresh = false): Promise<Tape[]> {

@@ -13,9 +13,9 @@ const TTL_MS = 5 * 60 * 1000;
 let cache: { at: number; data: ChannelCatalog } | null = null;
 
 function decode(s: string) {
-  return s.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1").replace(
-    /&(#x[0-9a-fA-F]+|#\d+|[a-z]+);/g,
-    (_, name: string) => {
+  return s
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
+    .replace(/&(#x[0-9a-fA-F]+|#\d+|[a-z]+);/g, (_, name: string) => {
       if (name === "amp") return "&";
       if (name === "lt") return "<";
       if (name === "gt") return ">";
@@ -28,8 +28,7 @@ function decode(s: string) {
         return String.fromCharCode(Number(name.slice(1)));
       }
       return name;
-    },
-  );
+    });
 }
 
 function stripHashtags(s: string) {
@@ -57,8 +56,9 @@ function isClipTitle(raw: string) {
 function isShortEntry(body: string, rawTitle: string, desc: string) {
   if (/\/shorts\//i.test(body) || /youtube\.com\/shorts\//i.test(body)) return true;
   if (/#shorts\b/i.test(rawTitle) || /#shorts\b/i.test(desc)) return true;
-  const seconds = body.match(/yt:duration[^>]*seconds="(\d+)"/i)?.[1]
-    ?? body.match(/<yt:duration>(\d+)<\/yt:duration>/i)?.[1];
+  const seconds =
+    body.match(/yt:duration[^>]*seconds="(\d+)"/i)?.[1] ??
+    body.match(/<yt:duration>(\d+)<\/yt:duration>/i)?.[1];
   if (seconds && Number(seconds) > 0 && Number(seconds) <= 60) return true;
   return false;
 }
@@ -84,10 +84,8 @@ function episodeFromTitle(rawTitle: string): { title: string; ep: number } | nul
 
 function cleanDescription(desc: string) {
   const body = desc.split(/Tags for algo/i)[0] ?? desc;
-  const stop =
-    /^(FOLLOW US|TWITCH:|INSTAGRAM:|TIKTOK:|REDDIT:|X:|If you stuck|SUBSCRIBE)/i;
-  const drop =
-    /^(MELON DROP MOTEL PODCAST\b|\d{1,2}\/\d{4}|🍉+$)/i;
+  const stop = /^(FOLLOW US|TWITCH:|INSTAGRAM:|TIKTOK:|REDDIT:|X:|If you stuck|SUBSCRIBE)/i;
+  const drop = /^(MELON DROP MOTEL PODCAST\b|\d{1,2}\/\d{4}|🍉+$)/i;
   const chapter = /^\d{1,2}:\d{2}(?::\d{2})?\s+\S/;
   const lines: string[] = [];
   for (const line of body.split(/\n/)) {
@@ -101,7 +99,21 @@ function cleanDescription(desc: string) {
     if (/^#/.test(t) && !stripHashtags(t)) continue;
     lines.push(stripHashtags(t) || t);
   }
-  return lines.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+  return lines
+    .join("\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function pacificDate(iso: string) {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso.slice(0, 10);
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Los_Angeles",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(d);
 }
 
 function knownEpisodes() {
@@ -125,15 +137,15 @@ export function mergeFeed(xml: string): ChannelCatalog {
     const rawTitle = decode(body.match(/<title>([^<]+)<\/title>/)?.[1] ?? "").trim();
     const published = body.match(/<published>([^<]+)<\/published>/)?.[1];
     const desc = decode(
-      body.match(/<media:description>([\s\S]*?)<\/media:description>/)?.[1] ??
-        "",
+      body.match(/<media:description>([\s\S]*?)<\/media:description>/)?.[1] ?? "",
     ).trim();
     const isShort = isShortEntry(body, rawTitle, desc);
     const isClip = isShort || isClipTitle(rawTitle);
     const parsed = isClip ? null : episodeFromTitle(rawTitle);
     if (!isClip && !parsed) continue;
     const hit = known.get(id);
-    const date = published ? published.slice(0, 10) : (hit?.date ?? "");
+    // Prefer the curated air date (Pacific time) over the feed's UTC timestamp.
+    const date = hit?.date || (published ? pacificDate(published) : "");
 
     if (parsed) {
       fromFeed.push({
@@ -160,10 +172,9 @@ export function mergeFeed(xml: string): ChannelCatalog {
     ...v,
     title: cleanTitle(v.title) || v.title,
   }));
-  const episodes = [
-    ...fromFeed.filter((v) => v.kind === "episode"),
-    ...archived,
-  ];
+  const episodes = [...fromFeed.filter((v) => v.kind === "episode"), ...archived].sort(
+    (a, b) => (b.ep ?? 0) - (a.ep ?? 0) || b.date.localeCompare(a.date),
+  );
   const clips = [
     ...fromFeed.filter((v) => v.kind === "clip"),
     ...CLIPS.filter((c) => !seen.has(c.id)).map((c) => ({
