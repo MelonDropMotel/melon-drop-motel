@@ -362,6 +362,13 @@ export const CLIPS: Video[] = [
     blurb: "Nicolas Cage clip. Crack energy. Not the Sony cut.",
     kind: "clip",
   },
+  {
+    id: "1BrTCaPVaRw",
+    title: "36 Chambers of Cancer",
+    date: "2025-04-03",
+    blurb: "da boyz talk about cancer and planes",
+    kind: "clip",
+  },
 ];
 
 export const LATEST = EPISODES[0];
