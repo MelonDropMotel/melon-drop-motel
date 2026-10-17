@@ -103,7 +103,7 @@ function Desk() {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:gap-16">
+      <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:grid-cols-1 lg:gap-16">
         <div className="order-2 md:order-1">
           <p className="hud-label">Front desk</p>
           <h1 className="font-display text-5xl tracking-[0.08em] chromatic sm:text-7xl">
@@ -114,27 +114,10 @@ function Desk() {
           </p>
         </div>
         <MotelSign className="order-1 mx-auto w-full max-w-[18rem] md:order-2 md:max-w-none lg:hidden" />
-        <nav aria-label="Find us" className="order-3 hidden lg:block">
-          <p className="hud-label">Find us</p>
-          <ul className="mt-3 grid grid-cols-4 gap-2">
-            {SITE.socials.map((s) => (
-              <li key={s.label}>
-                <a
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex h-11 items-center justify-center bg-surface px-3 text-fg shadow-border transition-colors hover:text-primary hover:shadow-border-hover"
-                >
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
       </div>
 
       <section className="grid gap-8 lg:grid-cols-2">
-        <form onSubmit={onBook} className="flex flex-col gap-3 bg-surface p-5 shadow-border">
+        <form onSubmit={onBook} className="flex flex-col gap-3 self-start bg-surface p-5 shadow-border">
           <p className="hud-label">Booking</p>
           <h2 className="font-display text-3xl tracking-[0.08em]">HIT US UP</h2>
           <label className="mt-2">
@@ -223,8 +206,9 @@ function Desk() {
               </>
             )}
           </form>
+          <MotelSign className="mx-auto hidden w-full max-w-[22rem] lg:block" />
 
-          <div className="bg-surface p-5 shadow-border lg:hidden">
+          <div className="bg-surface p-5 shadow-border">
             <p className="hud-label">Find us</p>
             <ul className="mt-3 grid grid-cols-2 gap-2">
               {SITE.socials.map((s) => (
@@ -241,7 +225,6 @@ function Desk() {
               ))}
             </ul>
           </div>
-          <MotelSign className="mx-auto hidden w-full max-w-[22rem] lg:block" />
         </div>
       </section>
     </div>
