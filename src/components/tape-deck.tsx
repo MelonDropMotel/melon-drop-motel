@@ -45,7 +45,7 @@ function HeadUnitViz({ playing, clock }: { playing: boolean; clock: number }) {
         const x = i * (bw + gap);
         const y = h - bh;
         ctx.fillStyle =
-          level > 0.78 ? "rgb(243,235,227)" : "rgb(255,75,110)";
+          level > 0.78 ? "rgb(243,235,227)" : "rgb(0,255,181)";
         ctx.fillRect(x, y, bw, bh);
       }
       raf = requestAnimationFrame(draw);
