@@ -50,6 +50,60 @@ export type Video = {
 
 export const EPISODES: Video[] = [
   {
+    id: "8cAWJz6Lp7Q",
+    ep: 31,
+    title: "Getting Indigenous with Columbus",
+    date: "2026-10-15",
+    blurb:
+      "Rusty has a bad time at a party. Tyler made a game to cheer him up. We celebrate Indigenous people and their culture. It's a long one so strap in.",
+    kind: "episode",
+  },
+  {
+    id: "S_t2LW9bx44",
+    ep: 30,
+    title: "Slurpee Batter",
+    date: "2026-10-06",
+    blurb:
+      "Yes y'all, we won that shit! Crack Amico has graciously decided to bless us lowly degenerates with a theme song that will hopefully raise the bar on the rest of the show. Don't hold your breath. Rusty decides to give Tyler a primer on black metal for some reason. We also talk AxCx song titles, knife tricks, goodwill bins and Slurpees. Just the type of slop you've come to expect from us. Thanks for being here. Luh u.",
+    kind: "episode",
+  },
+  {
+    id: "iGimq9x8qpk",
+    ep: 29,
+    title: "I'm Talking About Blended Sh*t",
+    date: "2026-09-30",
+    blurb:
+      "This was a long awaited debate for some.. unfortunately it didn't go exactly as planned. We had some fun with it though. The question is... Would you notice if poop was in your smoothie? If so, what percentage of blended sh*t is enough to make you stand up and say, \"HEY, THERE'S POOP IN MY SMOOTHIE!?\" Then, we check out some personal stories and current news articles. Only hard hitting, important, informational topics from us.",
+    kind: "episode",
+  },
+  {
+    id: "KCdMXrJCgDU",
+    ep: 28,
+    title: "Cuddly and Mostly Nude",
+    date: "2026-09-24",
+    blurb:
+      "DREAM DREAM DREAM DREAM DREAM DREAM. Rusty's been snoozing pretty hard, and his dreams show it. The guys ponder the big questions. It's a high energy sleepy episode. Get cozy, and enjoy.",
+    kind: "episode",
+  },
+  {
+    id: "OdEDx0C2bC4",
+    ep: 27,
+    title: "Clean Poops, Dirty Dates",
+    date: "2026-09-14",
+    blurb:
+      "You ready to learn something? You better be. This week, it's nothing but info. Informational as heck, breh. We share some stories, talk about chonies and mocos, and do some learning.",
+    kind: "episode",
+  },
+  {
+    id: "KrYGsc-yKHY",
+    ep: 26,
+    title: "King Hillbilly & Killer Robots",
+    date: "2026-09-07",
+    blurb:
+      "We're talking at you again. Look at us. What a freakin' podcast, Man. This time, we're focused on getting some cash- Or at least, imagining what that'd be like. We take a look at King Hillbilly, who quickly becomes a new favorite for us. Reality starts to set in when we look at how quickly a million dollars can disappear. Obviously, we had to check out some robots to brighten the mood and close out the show.",
+    kind: "episode",
+  },
+  {
     id: "9kFBfCYKEkA",
     ep: 25,
     title: "Lost in the Backrooms",
@@ -62,7 +116,7 @@ export const EPISODES: Video[] = [
     id: "G4G_OkkVfR8",
     ep: 24,
     title: "Reading Unreleased CIA Documents",
-    date: "2026-08-25",
+    date: "2026-08-24",
     blurb:
       "Oh snap. We're back up in yuh. A handwritten note, personally delivered to Tyler's lady. Line by line: CIA, public figures, a massive alien cover-up. Nobody here is safe.",
     kind: "episode",
@@ -89,7 +143,7 @@ export const EPISODES: Video[] = [
     id: "_whluxjQDe8",
     ep: 21,
     title: "TeresaCore, Propaganda, and Schizophrenia",
-    date: "2026-05-09",
+    date: "2026-05-08",
     blurb:
       "Rusty's water challenge, getting serious about AI, Iranian Lego propaganda, the cigarette connoisseur, and a brand new Melon Way original.",
     kind: "episode",
@@ -99,8 +153,7 @@ export const EPISODES: Video[] = [
     ep: 20,
     title: "HEART ATTACK 2026",
     date: "2026-03-03",
-    blurb:
-      "Rusty has a heart attack and talks at Tyler about it for an hour.",
+    blurb: "Rusty has a heart attack and talks at Tyler about it for an hour.",
     kind: "episode",
   },
   {
@@ -128,6 +181,15 @@ export const EPISODES: Video[] = [
     date: "2026-01-10",
     blurb:
       "CAPS LOCK STUCK. Tyler has lots of beef n' cheese and Rusty hates it and hates this episode.",
+    kind: "episode",
+  },
+  {
+    id: "3948wkp6IR4",
+    ep: 16,
+    title: "Oops! All Audio!",
+    date: "2026-01-07",
+    blurb:
+      "Congratulations. You've made it to the end of our data fiasco. The absolute finale of it all. A totally and completely... audio only episode. Just like the good ol' days.",
     kind: "episode",
   },
   {
@@ -161,7 +223,7 @@ export const EPISODES: Video[] = [
     id: "1gVNzNAg4w4",
     ep: 12,
     title: "Shout-Out Arturo, We're Talking Aliens",
-    date: "2025-09-21",
+    date: "2025-09-20",
     blurb:
       "What up, Melon Heads (Fruit Baskets if you nasty). Cursed MMO Perfect World, middle school, and evidence of past life on Mars. It's a bit of a mess, but it's here.",
     kind: "episode",
@@ -170,7 +232,7 @@ export const EPISODES: Video[] = [
     id: "hwu32-L4STk",
     ep: 11,
     title: "Gas Station Tales",
-    date: "2025-09-14",
+    date: "2025-09-13",
     blurb:
       "What makes a bad gas station customer? Which Breaking Bad character most resembles Rusty? Can Grandma snort some ZYN? Answers are revealed. Secrets become known.",
     kind: "episode",
@@ -179,16 +241,15 @@ export const EPISODES: Video[] = [
     id: "b1I5MDZaZwc",
     ep: 10,
     title: "He Brought Soft Serve, I Brought Topics",
-    date: "2025-09-06",
-    blurb:
-      "Mayhem, soft serve, chemtrails. He brought the ice cream. We brought everything else.",
+    date: "2025-09-05",
+    blurb: "Mayhem, soft serve, chemtrails. He brought the ice cream. We brought everything else.",
     kind: "episode",
   },
   {
     id: "CU2SwcUEbg0",
     ep: 9,
     title: "Playing to the Camera (The Long Awaited Return)",
-    date: "2025-08-31",
+    date: "2025-08-30",
     blurb:
       "Another ep is finally out. Clearly this was the peak of our editing capabilities. Bad camera work. Certified reunion.",
     kind: "episode",
@@ -206,7 +267,7 @@ export const EPISODES: Video[] = [
     id: "ZaGUP9BaApo",
     ep: 7,
     title: "Melting with Friends!",
-    date: "2025-07-05",
+    date: "2025-07-04",
     blurb:
       "Yup. It's another round of slop just for you guys. The boyz throw out more random threats, while taking back others.",
     kind: "episode",
@@ -216,8 +277,7 @@ export const EPISODES: Video[] = [
     ep: 6,
     title: "My Big Lesbian Catholic Birthday Weekend",
     date: "2025-06-28",
-    blurb:
-      "This episode starts strong, firing off threats to pretty much any and everyone.",
+    blurb: "This episode starts strong, firing off threats to pretty much any and everyone.",
     kind: "episode",
   },
   {
@@ -242,9 +302,8 @@ export const EPISODES: Video[] = [
     id: "NQLraOirFzY",
     ep: 3,
     title: "Midnight; ABSOLUTELY",
-    date: "2025-04-12",
-    blurb:
-      "Late night tape from the early days of the motel. Midnight. Absolutely.",
+    date: "2025-05-29",
+    blurb: "Late night tape from the early days of the motel. Midnight. Absolutely.",
     kind: "episode",
   },
   {
@@ -269,11 +328,120 @@ export const EPISODES: Video[] = [
 
 export const CLIPS: Video[] = [
   {
+    id: "PlSLa3_xdo8",
+    title: "I've p*ssed my pants under normal circumstances..",
+    date: "2026-10-08",
+    blurb: "Top notch topics from the crew here",
+    kind: "clip",
+  },
+  {
+    id: "ohBI0a8XgUk",
+    title: "Getting denied every single episode..",
+    date: "2026-10-05",
+    blurb:
+      "Rusty knows when he wants to segue, and that's just the way it has to be. He just wants it to BREATHE.",
+    kind: "clip",
+  },
+  {
+    id: "zjpiVAadU6A",
+    title: "I can spot AI use immediately",
+    date: "2026-10-03",
+    blurb: "The guys take a moment to let people know how to spot AI use. It's obvious.. really..",
+    kind: "clip",
+  },
+  {
+    id: "E_U4Txw2B4Q",
+    title: "Check out this mean monkey..",
+    date: "2026-10-02",
+    blurb: "The guys discuss a previous coworker. He’s a little rascal.",
+    kind: "clip",
+  },
+  {
+    id: "Ysw1cuzwGOs",
+    title: "I'M MAKING OVER HERE",
+    date: "2026-01-22",
+    blurb: "Classic.",
+    kind: "clip",
+  },
+  {
+    id: "9vErOMtjiF8",
+    title: "Whatever this is that you're doing.... it sucks.",
+    date: "2026-01-13",
+    blurb: "Rusty has had ENOUGH. Enjoy the mania- Full episode linked.",
+    kind: "clip",
+  },
+  {
+    id: "pLJXvUuFK0Y",
+    title: "Sheesh.. How far into this are we?",
+    date: "2026-01-12",
+    blurb: "Rusty is over it. What's new? Enjoy the mania- Full episode linked.",
+    kind: "clip",
+  },
+  {
+    id: "LBbHqHaRHSg",
+    title: "Where ya been at, Donald?",
+    date: "2025-09-30",
+    blurb: "Trump is always in the news, when He's not, it's news. What a dangerous loop",
+    kind: "clip",
+  },
+  {
+    id: "NBBhYlYIOw8",
+    title: "The Average Korn Concert Experience",
+    date: "2025-09-25",
+    blurb: "What do you expect when you show up to a performance like this?",
+    kind: "clip",
+  },
+  {
+    id: "cpON7HKUb_I",
+    title: "What is the UK doing to the sky?",
+    date: "2025-09-11",
+    blurb:
+      "The United Kingdom has an idea to combat climate change, and it's absolutely bonkers. Who approved this??",
+    kind: "clip",
+  },
+  {
+    id: "LbTQHQB2kWU",
+    title: "It's a labor of love. Hope someone's enjoying it.",
+    date: "2025-09-10",
+    blurb:
+      "The guys use this opportunity to complain some more. We'll figure out an efficient process eventually, but don't expect the whining to stop. Check out the full ep to see the fruits of our labor.",
+    kind: "clip",
+  },
+  {
+    id: "8KxX-7c3P7E",
+    title: "Rusty's got a big fat secret. What else is he hiding?",
+    date: "2025-09-09",
+    blurb: "A quick panic reveals a moment of insecurity. It's all in good fun though.",
+    kind: "clip",
+  },
+  {
+    id: "IPvhNWM7F4Q",
+    title: "We're taking a step in a new direction",
+    date: "2025-06-28",
+    blurb:
+      "We take a walk over to a new website Rusty found. Really something else man. You like Lord of the Rings? This might be the content you're looking for.",
+    kind: "clip",
+  },
+  {
+    id: "PfF5j__SnKc",
+    title: "Who are the Mighty Macs?",
+    date: "2025-06-24",
+    blurb:
+      "Who are the Mighty Macs, and who's going to stop them? Coach Rush can't get away with this.",
+    kind: "clip",
+  },
+  {
+    id: "aElHg4tbA6g",
+    title: "The Cannon Bait",
+    date: "2025-06-19",
+    blurb: "The gang makes a pit stop to talk about marching band",
+    kind: "clip",
+  },
+  {
     id: "iDDEKQwLPHI",
     title: "There's been a situation..",
     date: "2026-03-05",
-    blurb:
-      "Sometimes you overdo it. Take it easy this weekend. Rusty sure will be.",
+    blurb: "Sometimes you overdo it. Take it easy this weekend. Rusty sure will be.",
     kind: "clip",
   },
   {
@@ -287,8 +455,7 @@ export const CLIPS: Video[] = [
     id: "yYgTI8wNMm0",
     title: "Rusty takes on the water bottle chug challenge",
     date: "2026-05-07",
-    blurb:
-      "Rusty's been training for this one. 16.9 fluid ounces of H2O. Don't try this at home.",
+    blurb: "Rusty's been training for this one. 16.9 fluid ounces of H2O. Don't try this at home.",
     kind: "clip",
   },
   {
@@ -303,6 +470,13 @@ export const CLIPS: Video[] = [
     title: "I don't think this is Spider Noir..",
     date: "2026-06-06",
     blurb: "Nicolas Cage clip. Crack energy. Not the Sony cut.",
+    kind: "clip",
+  },
+  {
+    id: "1BrTCaPVaRw",
+    title: "36 Chambers of Cancer",
+    date: "2025-04-03",
+    blurb: "da boyz talk about cancer and planes",
     kind: "clip",
   },
 ];

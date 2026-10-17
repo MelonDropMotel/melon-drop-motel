@@ -3,6 +3,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { type FormEvent, useState } from "react";
 import { SITE } from "@/data/site";
+import { MotelSign } from "@/components/motel-sign";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/desk")({ component: Desk });
@@ -102,34 +103,30 @@ function Desk() {
 
   return (
     <div className="flex flex-col gap-12">
-      <div>
-        <p className="hud-label">Front desk</p>
-        <h1 className="font-display text-5xl tracking-[0.08em] chromatic sm:text-7xl">
-          Ring the bell
-        </h1>
-        <p className="mt-3 max-w-2xl text-muted">
-          Your letter will be delivered directly to the motel staff.
-        </p>
+      <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:grid-cols-1 lg:gap-16">
+        <div className="order-2 md:order-1">
+          <p className="hud-label">Front desk</p>
+          <h1 className="font-display text-5xl tracking-[0.08em] chromatic sm:text-7xl">
+            Ring the bell
+          </h1>
+          <p className="mt-3 max-w-2xl text-muted">
+            Your letter will be delivered directly to the motel staff.
+          </p>
+        </div>
+        <MotelSign className="order-1 mx-auto w-full max-w-[18rem] md:order-2 md:max-w-none lg:hidden" />
       </div>
 
       <section className="grid gap-8 lg:grid-cols-2">
         <form onSubmit={onBook} className="flex flex-col gap-3 bg-surface p-5 shadow-border">
           <p className="hud-label">Booking</p>
-          <h2 className="font-display text-3xl tracking-[0.08em]">
-            Put the guys on a bill
-          </h2>
+          <h2 className="font-display text-3xl tracking-[0.08em]">HIT US UP</h2>
           <label className="mt-2">
             <span className="hud-label">Name</span>
             <input name="name" required className={`mt-1 ${field}`} />
           </label>
           <label>
             <span className="hud-label">Email</span>
-            <input
-              name="email"
-              type="email"
-              required
-              className={`mt-1 ${field}`}
-            />
+            <input name="email" type="email" required className={`mt-1 ${field}`} />
           </label>
           <label>
             <span className="hud-label">City</span>
@@ -144,12 +141,12 @@ function Desk() {
               <option value="Suggestion">Suggestion</option>
             </select>
           </label>
-          <label>
+          <label className="lg:flex lg:flex-1 lg:flex-col">
             <span className="hud-label">Note</span>
             <textarea
               name="note"
               rows={4}
-              className="mt-1 min-h-28 w-full bg-bg p-3 text-fg shadow-border outline-none placeholder:text-muted focus:shadow-border-hover"
+              className="mt-1 min-h-28 w-full lg:flex-1 bg-bg p-3 text-fg shadow-border outline-none placeholder:text-muted focus:shadow-border-hover"
             />
           </label>
           {booked ? (
@@ -160,14 +157,12 @@ function Desk() {
             <>
               {activateHint ? (
                 <p className="text-primary">
-                  First letter needs a key. Check the motel inbox (and spam)
-                  for FormSubmit, click Activate Form, then send again.
+                  First letter needs a key. Check the motel inbox (and spam) for FormSubmit, click
+                  Activate Form, then send again.
                 </p>
               ) : null}
               {bookError ? (
-                <p className="text-primary">
-                  The clerk lost the fax. Try again in a minute.
-                </p>
+                <p className="text-primary">The clerk lost the fax. Try again in a minute.</p>
               ) : null}
               <Button type="submit" className="mt-2" disabled={booking}>
                 {booking ? "Sending…" : "Send it"}
@@ -179,28 +174,22 @@ function Desk() {
         <div className="flex flex-col gap-6">
           <form onSubmit={onNews} className="bg-surface p-5 shadow-border">
             <p className="hud-label">Permanent guest list</p>
-            <h2 className="font-display text-3xl tracking-[0.08em]">
-              Tape drop alerts
-            </h2>
+            <h2 className="font-display text-3xl tracking-[0.08em]">Tape drop alerts</h2>
             <p className="mt-2 text-muted">
               Get pinged when a new tape lands. Sign up for our mailing list!
             </p>
             {listed ? (
-              <p className="mt-4 text-primary">
-                You're on the list. Don't lose the key.
-              </p>
+              <p className="mt-4 text-primary">You're on the list. Don't lose the key.</p>
             ) : (
               <>
                 {activateHint ? (
                   <p className="mt-3 text-primary">
-                    First letter needs a key. Check the motel inbox (and spam)
-                    for FormSubmit, click Activate Form, then send again.
+                    First letter needs a key. Check the motel inbox (and spam) for FormSubmit, click
+                    Activate Form, then send again.
                   </p>
                 ) : null}
                 {listError ? (
-                  <p className="mt-3 text-primary">
-                    Didn't go through. Hit check-in again.
-                  </p>
+                  <p className="mt-3 text-primary">Didn't go through. Hit check-in again.</p>
                 ) : null}
                 <div className="mt-4 flex flex-row items-center gap-3">
                   <input
@@ -217,6 +206,7 @@ function Desk() {
               </>
             )}
           </form>
+          <MotelSign className="mx-auto hidden w-full max-w-[22rem] lg:block" />
 
           <div className="bg-surface p-5 shadow-border">
             <p className="hud-label">Find us</p>

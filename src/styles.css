@@ -7,14 +7,14 @@
   --font-mono: "VT323", "Courier New", ui-monospace, monospace;
   --color-bg: #0d0b0c;
   --color-fg: #f3ebe3;
-  --color-primary: #ff4b6e;
+  --color-primary: #00ffb5;
   --color-muted: #9a8b86;
   --color-surface: #1a1416;
   --radius-lg: 0.35rem;
   --radius-xl: 0.5rem;
   --shadow-border: 0 0 0 1px #f3ebe31a;
-  --shadow-border-hover: 0 0 0 1px #ff4b6e8c;
-  --shadow-crt: inset 0 0 40px #0000008c, inset 0 0 80px #ff4b6e14,
+  --shadow-border-hover: 0 0 0 1px #00ffb58c;
+  --shadow-crt: inset 0 0 40px #0000008c, inset 0 0 80px #00ffb514,
     0 0 0 1px #f3ebe314;
 }
 
@@ -104,7 +104,7 @@
   opacity: 0;
   background-image: linear-gradient(
     #0000 0%,
-    #ff4b6e0d 42%,
+    #00ffb50d 42%,
     #f3ebe329 50%,
     #50c86e0f 58%,
     #0000 100%
@@ -228,7 +228,7 @@
 }
 
 .chromatic {
-  text-shadow: 2px 0 #ff4b6eb3;
+  text-shadow: 2px 0 #00ffb5b3;
 }
 
 @supports (color: color-mix(in lab, red, red)) {
