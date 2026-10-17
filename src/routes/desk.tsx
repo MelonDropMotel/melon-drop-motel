@@ -116,7 +116,7 @@ function Desk() {
         <form onSubmit={onBook} className="flex flex-col gap-3 bg-surface p-5 shadow-border">
           <p className="hud-label">Booking</p>
           <h2 className="font-display text-3xl tracking-[0.08em]">
-            Put the guys on a bill
+            HIT US UP
           </h2>
           <label className="mt-2">
             <span className="hud-label">Name</span>
