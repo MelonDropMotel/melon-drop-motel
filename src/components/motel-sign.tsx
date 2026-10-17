@@ -5,7 +5,7 @@ const ALT = "Melon Drop Motel Sucks";
 
 /**
  * The animated "MELON DROP MOTEL SUCKS" tower. The source GIF is transparent;
- * these encodes are composited onto the site background (#0d0b0c) so they sit
+ * these encodes are composited onto the site background (pure black) and drawn with mix-blend-mode: screen, so black drops out and they sit
  * directly on the page in every browser (Safari can't do WebM alpha).
  * Reduced-motion visitors keep the still frame.
  */
@@ -20,7 +20,8 @@ export function MotelSign({ className = "" }: { className?: string }) {
     return () => mq?.removeEventListener?.("change", onChange);
   }, []);
 
-  const media = "block aspect-[16/9] h-auto w-full";
+  const media =
+    "block aspect-[16/9] h-auto w-full mix-blend-screen [mask-image:radial-gradient(ellipse_at_center,#000_62%,transparent_98%)]";
   return (
     <div className={className}>
       {animate ? (
