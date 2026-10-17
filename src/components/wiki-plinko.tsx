@@ -363,7 +363,6 @@ export function WikiPlinko({
           onClick={() => {
             if (busy || disabled || fallingRef.current) return;
             const puck = puckRef.current;
-            greenRef.current = Math.random() < GREEN;
             puck.y = RAIL_Y;
             puck.vx = 0;
             puck.vy = 0.2;

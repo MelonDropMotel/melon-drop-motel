@@ -93,24 +93,9 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/$'
-    | '/about'
-    | '/desk'
-    | '/live'
-    | '/shop'
-    | '/watch'
-    | '/wiki'
+    '/' | '/$' | '/about' | '/desk' | '/live' | '/shop' | '/watch' | '/wiki'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/$'
-    | '/about'
-    | '/desk'
-    | '/live'
-    | '/shop'
-    | '/watch'
-    | '/wiki'
+  to: '/' | '/$' | '/about' | '/desk' | '/live' | '/shop' | '/watch' | '/wiki'
   id:
     | '__root__'
     | '/'
@@ -169,13 +154,6 @@ declare module '@tanstack/react-router' {
       path: '/live'
       fullPath: '/live'
       preLoaderRoute: typeof LiveRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pack': {
-      id: '/pack'
-      path: '/pack'
-      fullPath: '/pack'
-      preLoaderRoute: typeof PackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/shop': {
