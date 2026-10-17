@@ -103,15 +103,17 @@ function Desk() {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="flex flex-col items-center text-center">
-        <MotelSign className="pointer-events-none -mb-1 w-full max-w-[40rem] select-none sm:-mb-4" />
-        <p className="hud-label">Front desk</p>
-        <h1 className="font-display text-5xl tracking-[0.08em] chromatic sm:text-7xl">
-          Ring the bell
-        </h1>
-        <p className="mt-3 max-w-2xl text-muted">
-          Your letter will be delivered directly to the motel staff.
-        </p>
+      <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-16">
+        <div className="order-2 md:order-1">
+          <p className="hud-label">Front desk</p>
+          <h1 className="font-display text-5xl tracking-[0.08em] chromatic sm:text-7xl">
+            Ring the bell
+          </h1>
+          <p className="mt-3 max-w-2xl text-muted">
+            Your letter will be delivered directly to the motel staff.
+          </p>
+        </div>
+        <MotelSign className="order-1 mx-auto w-full max-w-[18rem] md:order-2 md:max-w-none" />
       </div>
 
       <section className="grid gap-8 lg:grid-cols-2">

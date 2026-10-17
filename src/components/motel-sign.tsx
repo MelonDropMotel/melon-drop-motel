@@ -1,49 +1,24 @@
-import { useEffect, useState } from "react";
-
+const ANIM = "/images/desk/mdm-sucks-tower.webp";
 const STILL = "/images/desk/mdm-sucks-tower-still.webp";
-const ALT = "Melon Drop Motel Sucks";
 
 /**
- * The animated "MELON DROP MOTEL SUCKS" tower. The source GIF is transparent;
- * these encodes are composited onto the site background (pure black) and drawn with mix-blend-mode: screen, so black drops out and they sit
- * directly on the page in every browser (Safari can't do WebM alpha).
- * Reduced-motion visitors keep the still frame.
+ * The animated "MELON DROP MOTEL SUCKS" tower: the original transparent GIF,
+ * re-encoded as a lossless animated WebP (true alpha, original palette colors),
+ * cropped to the artwork. Reduced-motion visitors get a single still frame.
  */
 export function MotelSign({ className = "" }: { className?: string }) {
-  const [animate, setAnimate] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia?.("(prefers-reduced-motion: reduce)");
-    setAnimate(!mq?.matches);
-    const onChange = () => setAnimate(!mq?.matches);
-    mq?.addEventListener?.("change", onChange);
-    return () => mq?.removeEventListener?.("change", onChange);
-  }, []);
-
-  const media =
-    "block aspect-[16/9] h-auto w-full mix-blend-screen [mask-image:radial-gradient(ellipse_at_center,#000_62%,transparent_98%)]";
   return (
-    <div className={className}>
-      {animate ? (
-        <video
-          className={media}
-          width={960}
-          height={540}
-          poster={STILL}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          aria-label={ALT}
-          role="img"
-        >
-          <source src="/images/desk/mdm-sucks-tower.webm" type="video/webm" />
-          <source src="/images/desk/mdm-sucks-tower.mp4" type="video/mp4" />
-        </video>
-      ) : (
-        <img className={media} src={STILL} width={960} height={540} alt={ALT} decoding="async" />
-      )}
-    </div>
+    <picture className={`pointer-events-none block select-none ${className}`}>
+      <source media="(prefers-reduced-motion: reduce)" srcSet={STILL} />
+      <img
+        src={ANIM}
+        width={640}
+        height={611}
+        alt="Melon Drop Motel Sucks"
+        loading="lazy"
+        decoding="async"
+        className="block h-auto w-full outline-none [filter:drop-shadow(0_0_10px_#00ffb540)]"
+      />
+    </picture>
   );
 }
