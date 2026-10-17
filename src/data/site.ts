@@ -328,6 +328,116 @@ export const EPISODES: Video[] = [
 
 export const CLIPS: Video[] = [
   {
+    id: "PlSLa3_xdo8",
+    title: "I've p*ssed my pants under normal circumstances..",
+    date: "2026-10-08",
+    blurb: "Top notch topics from the crew here",
+    kind: "clip",
+  },
+  {
+    id: "ohBI0a8XgUk",
+    title: "Getting denied every single episode..",
+    date: "2026-10-05",
+    blurb:
+      "Rusty knows when he wants to segue, and that's just the way it has to be. He just wants it to BREATHE.",
+    kind: "clip",
+  },
+  {
+    id: "zjpiVAadU6A",
+    title: "I can spot AI use immediately",
+    date: "2026-10-03",
+    blurb: "The guys take a moment to let people know how to spot AI use. It's obvious.. really..",
+    kind: "clip",
+  },
+  {
+    id: "E_U4Txw2B4Q",
+    title: "Check out this mean monkey..",
+    date: "2026-10-02",
+    blurb: "The guys discuss a previous coworker. He’s a little rascal.",
+    kind: "clip",
+  },
+  {
+    id: "Ysw1cuzwGOs",
+    title: "I'M MAKING OVER HERE",
+    date: "2026-01-22",
+    blurb: "Classic.",
+    kind: "clip",
+  },
+  {
+    id: "9vErOMtjiF8",
+    title: "Whatever this is that you're doing.... it sucks.",
+    date: "2026-01-13",
+    blurb: "Rusty has had ENOUGH. Enjoy the mania- Full episode linked.",
+    kind: "clip",
+  },
+  {
+    id: "pLJXvUuFK0Y",
+    title: "Sheesh.. How far into this are we?",
+    date: "2026-01-12",
+    blurb: "Rusty is over it. What's new? Enjoy the mania- Full episode linked.",
+    kind: "clip",
+  },
+  {
+    id: "LBbHqHaRHSg",
+    title: "Where ya been at, Donald?",
+    date: "2025-09-30",
+    blurb: "Trump is always in the news, when He's not, it's news. What a dangerous loop",
+    kind: "clip",
+  },
+  {
+    id: "NBBhYlYIOw8",
+    title: "The Average Korn Concert Experience",
+    date: "2025-09-25",
+    blurb: "What do you expect when you show up to a performance like this?",
+    kind: "clip",
+  },
+  {
+    id: "cpON7HKUb_I",
+    title: "What is the UK doing to the sky?",
+    date: "2025-09-11",
+    blurb:
+      "The United Kingdom has an idea to combat climate change, and it's absolutely bonkers. Who approved this??",
+    kind: "clip",
+  },
+  {
+    id: "LbTQHQB2kWU",
+    title: "It's a labor of love. Hope someone's enjoying it.",
+    date: "2025-09-10",
+    blurb:
+      "The guys use this opportunity to complain some more. We'll figure out an efficient process eventually, but don't expect the whining to stop. Check out the full ep to see the fruits of our labor.",
+    kind: "clip",
+  },
+  {
+    id: "8KxX-7c3P7E",
+    title: "Rusty's got a big fat secret. What else is he hiding?",
+    date: "2025-09-09",
+    blurb: "A quick panic reveals a moment of insecurity. It's all in good fun though.",
+    kind: "clip",
+  },
+  {
+    id: "IPvhNWM7F4Q",
+    title: "We're taking a step in a new direction",
+    date: "2025-06-28",
+    blurb:
+      "We take a walk over to a new website Rusty found. Really something else man. You like Lord of the Rings? This might be the content you're looking for.",
+    kind: "clip",
+  },
+  {
+    id: "PfF5j__SnKc",
+    title: "Who are the Mighty Macs?",
+    date: "2025-06-24",
+    blurb:
+      "Who are the Mighty Macs, and who's going to stop them? Coach Rush can't get away with this.",
+    kind: "clip",
+  },
+  {
+    id: "aElHg4tbA6g",
+    title: "The Cannon Bait",
+    date: "2025-06-19",
+    blurb: "The gang makes a pit stop to talk about marching band",
+    kind: "clip",
+  },
+  {
     id: "iDDEKQwLPHI",
     title: "There's been a situation..",
     date: "2026-03-05",

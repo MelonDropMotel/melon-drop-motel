@@ -181,7 +181,7 @@ export function mergeFeed(xml: string): ChannelCatalog {
       ...c,
       title: cleanTitle(c.title) || c.title,
     })),
-  ];
+  ].sort((a, b) => b.date.localeCompare(a.date));
   const latest = episodes[0] ?? fromFeed[0] ?? LATEST;
   return { episodes, clips, latest };
 }
