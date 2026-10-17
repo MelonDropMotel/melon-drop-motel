@@ -3,6 +3,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { type FormEvent, useState } from "react";
 import { SITE } from "@/data/site";
+import { StationId } from "@/components/station-id";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/desk")({ component: Desk });
@@ -102,34 +103,30 @@ function Desk() {
 
   return (
     <div className="flex flex-col gap-12">
-      <div>
-        <p className="hud-label">Front desk</p>
-        <h1 className="font-display text-5xl tracking-[0.08em] chromatic sm:text-7xl">
-          Ring the bell
-        </h1>
-        <p className="mt-3 max-w-2xl text-muted">
-          Your letter will be delivered directly to the motel staff.
-        </p>
+      <div className="grid items-center gap-8 lg:grid-cols-[1fr_minmax(0,26rem)]">
+        <div>
+          <p className="hud-label">Front desk</p>
+          <h1 className="font-display text-5xl tracking-[0.08em] chromatic sm:text-7xl">
+            Ring the bell
+          </h1>
+          <p className="mt-3 max-w-2xl text-muted">
+            Your letter will be delivered directly to the motel staff.
+          </p>
+        </div>
+        <StationId className="w-full max-w-md justify-self-center lg:justify-self-end" />
       </div>
 
       <section className="grid gap-8 lg:grid-cols-2">
         <form onSubmit={onBook} className="flex flex-col gap-3 bg-surface p-5 shadow-border">
           <p className="hud-label">Booking</p>
-          <h2 className="font-display text-3xl tracking-[0.08em]">
-            HIT US UP
-          </h2>
+          <h2 className="font-display text-3xl tracking-[0.08em]">HIT US UP</h2>
           <label className="mt-2">
             <span className="hud-label">Name</span>
             <input name="name" required className={`mt-1 ${field}`} />
           </label>
           <label>
             <span className="hud-label">Email</span>
-            <input
-              name="email"
-              type="email"
-              required
-              className={`mt-1 ${field}`}
-            />
+            <input name="email" type="email" required className={`mt-1 ${field}`} />
           </label>
           <label>
             <span className="hud-label">City</span>
@@ -160,14 +157,12 @@ function Desk() {
             <>
               {activateHint ? (
                 <p className="text-primary">
-                  First letter needs a key. Check the motel inbox (and spam)
-                  for FormSubmit, click Activate Form, then send again.
+                  First letter needs a key. Check the motel inbox (and spam) for FormSubmit, click
+                  Activate Form, then send again.
                 </p>
               ) : null}
               {bookError ? (
-                <p className="text-primary">
-                  The clerk lost the fax. Try again in a minute.
-                </p>
+                <p className="text-primary">The clerk lost the fax. Try again in a minute.</p>
               ) : null}
               <Button type="submit" className="mt-2" disabled={booking}>
                 {booking ? "Sending…" : "Send it"}
@@ -179,28 +174,22 @@ function Desk() {
         <div className="flex flex-col gap-6">
           <form onSubmit={onNews} className="bg-surface p-5 shadow-border">
             <p className="hud-label">Permanent guest list</p>
-            <h2 className="font-display text-3xl tracking-[0.08em]">
-              Tape drop alerts
-            </h2>
+            <h2 className="font-display text-3xl tracking-[0.08em]">Tape drop alerts</h2>
             <p className="mt-2 text-muted">
               Get pinged when a new tape lands. Sign up for our mailing list!
             </p>
             {listed ? (
-              <p className="mt-4 text-primary">
-                You're on the list. Don't lose the key.
-              </p>
+              <p className="mt-4 text-primary">You're on the list. Don't lose the key.</p>
             ) : (
               <>
                 {activateHint ? (
                   <p className="mt-3 text-primary">
-                    First letter needs a key. Check the motel inbox (and spam)
-                    for FormSubmit, click Activate Form, then send again.
+                    First letter needs a key. Check the motel inbox (and spam) for FormSubmit, click
+                    Activate Form, then send again.
                   </p>
                 ) : null}
                 {listError ? (
-                  <p className="mt-3 text-primary">
-                    Didn't go through. Hit check-in again.
-                  </p>
+                  <p className="mt-3 text-primary">Didn't go through. Hit check-in again.</p>
                 ) : null}
                 <div className="mt-4 flex flex-row items-center gap-3">
                   <input
