@@ -29,12 +29,16 @@ export function ListenBadges() {
   return (
     <div>
       <p className="hud-label mb-3">Also on</p>
-      <ul className="grid max-w-[37rem] grid-cols-3 items-start gap-3">
+      <ul className="grid max-w-[16.75rem] grid-cols-1 items-start gap-x-3 gap-y-8 pb-6 sm:max-w-[37rem] sm:grid-cols-3">
         {BADGES.map((b) => (
-          <li key={b.id} className="min-w-0">
+          <li key={b.id} className="relative min-w-0">
             {b.href ? (
               <a href={b.href} target="_blank" rel="noreferrer" className="quiet block w-full">
-                <img src={b.src} alt={b.alt} className="h-11 w-full object-contain outline-none" />
+                <img
+                  src={b.src}
+                  alt={b.alt}
+                  className="block aspect-[268/56] h-auto w-full outline-none"
+                />
               </a>
             ) : (
               <button
@@ -43,12 +47,16 @@ export function ListenBadges() {
                 onClick={() => setSoon(b.id)}
                 aria-label={`${b.alt} (coming soon)`}
               >
-                <img src={b.src} alt={b.alt} className="h-11 w-full object-contain outline-none" />
+                <img
+                  src={b.src}
+                  alt={b.alt}
+                  className="block aspect-[268/56] h-auto w-full outline-none"
+                />
               </button>
             )}
             {b.href ? null : (
               <p
-                className={`mt-1 text-sm tracking-[0.08em] ${
+                className={`absolute left-0 top-full mt-1 text-sm tracking-[0.08em] ${
                   soon === b.id ? "text-muted" : "invisible"
                 }`}
               >
