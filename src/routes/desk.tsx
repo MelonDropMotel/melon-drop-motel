@@ -117,7 +117,7 @@ function Desk() {
       </div>
 
       <section className="grid gap-8 lg:grid-cols-2">
-        <form onSubmit={onBook} className="flex flex-col gap-3 self-start bg-surface p-5 shadow-border">
+        <form onSubmit={onBook} className="flex flex-col gap-3 bg-surface p-5 shadow-border">
           <p className="hud-label">Booking</p>
           <h2 className="font-display text-3xl tracking-[0.08em]">HIT US UP</h2>
           <label className="mt-2">
@@ -141,12 +141,12 @@ function Desk() {
               <option value="Suggestion">Suggestion</option>
             </select>
           </label>
-          <label>
+          <label className="lg:flex lg:flex-1 lg:flex-col">
             <span className="hud-label">Note</span>
             <textarea
               name="note"
               rows={4}
-              className="mt-1 min-h-28 w-full bg-bg p-3 text-fg shadow-border outline-none placeholder:text-muted focus:shadow-border-hover"
+              className="mt-1 min-h-28 w-full lg:flex-1 bg-bg p-3 text-fg shadow-border outline-none placeholder:text-muted focus:shadow-border-hover"
             />
           </label>
           {booked ? (
