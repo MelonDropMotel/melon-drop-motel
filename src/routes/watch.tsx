@@ -10,11 +10,15 @@ import { ListenBadges } from "@/components/listen-badges";
 import { cn, formatAirDate, ytThumb } from "@/lib/utils";
 import { getChannelVideos } from "@/lib/youtube";
 import { getPodcastEpisodes } from "@/lib/podcast";
+import { Pager } from "@/components/pager";
+import { paginate, pageParam } from "@/lib/paginate";
+import { pageHead } from "@/lib/page-head";
 
 const searchSchema = z.object({
   v: z.string().optional(),
   tape: z.string().optional(),
   tab: z.enum(["episodes", "clips", "tapes"]).optional(),
+  page: z.coerce.number().int().min(1).optional().catch(undefined),
 });
 
 export const Route = createFileRoute("/watch")({
@@ -26,6 +30,7 @@ export const Route = createFileRoute("/watch")({
     ]);
     return { ...catalog, tapes };
   },
+  head: ({ match }) => pageHead("Watch", "/watch", match.search as Record<string, unknown>, ["page"]),
   component: Watch,
 });
 
@@ -33,7 +38,7 @@ type Tab = "episodes" | "clips" | "tapes";
 
 function Watch() {
   const catalog = Route.useLoaderData();
-  const { v, tape: tapeId, tab: tabQ } = Route.useSearch();
+  const { v, tape: tapeId, tab: tabQ, page } = Route.useSearch();
 
   const current = useMemo((): Video => {
     if (!v) return catalog.latest;
@@ -61,6 +66,9 @@ function Watch() {
 
   const list = tab === "episodes" ? catalog.episodes : tab === "clips" ? catalog.clips : null;
   const onTapes = tab === "tapes";
+  const slice = paginate(onTapes ? catalog.tapes.length : (list?.length ?? 0), page);
+  const tapesPage = catalog.tapes.slice(slice.start, slice.end);
+  const listPage = list?.slice(slice.start, slice.end);
 
   return (
     <div className="flex flex-col gap-8">
@@ -132,15 +140,17 @@ function Watch() {
         ))}
       </div>
 
+      <div id="watch-list" className="scroll-mt-24">
       {onTapes ? (
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {catalog.tapes.map((item) => {
+          {tapesPage.map((item) => {
             const active = item.id === currentTape?.id;
             return (
               <li key={item.id}>
                 <Link
                   to="/watch"
-                  search={{ tape: item.id, tab: "tapes" }}
+                  search={{ tape: item.id, tab: "tapes", page: pageParam(slice.page) }}
+                  resetScroll={false}
                   className={cn(
                     "flex h-full flex-col overflow-hidden bg-surface p-4 transition-[box-shadow] duration-150",
                     active ? "shadow-border-hover" : "shadow-border hover:shadow-border-hover",
@@ -165,13 +175,13 @@ function Watch() {
         </ul>
       ) : (
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {list?.map((item) => {
+          {listPage?.map((item) => {
             const active = item.id === current.id;
             return (
               <li key={item.id}>
                 <Link
                   to="/watch"
-                  search={{ v: item.id, tab }}
+                  search={{ v: item.id, tab, page: pageParam(slice.page) }}
                   className={cn(
                     "flex h-full flex-col overflow-hidden bg-surface transition-[box-shadow] duration-150",
                     active ? "shadow-border-hover" : "shadow-border hover:shadow-border-hover",
@@ -212,6 +222,12 @@ function Watch() {
           })}
         </ul>
       )}
+      <Pager
+        slice={slice}
+        anchorId="watch-list"
+        label={tab === "tapes" ? "Tape pages" : tab === "clips" ? "Clip pages" : "Episode pages"}
+      />
+      </div>
     </div>
   );
 }

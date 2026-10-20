@@ -53,9 +53,12 @@ function About() {
         <p className="hud-label">Press, sort of</p>
         <ul className="mt-4 grid gap-4 md:grid-cols-3">
           {PRESS.map((p) => (
-            <li key={p.source} className="rounded-[10px] border-l-2 border-primary bg-surface p-5">
-              <p className="text-xl text-fg">“{p.quote}”</p>
-              <p className="mt-3 hud-label">{p.source}</p>
+            <li
+              key={p.source}
+              className="flex h-full flex-col rounded-[10px] border-l-2 border-primary bg-surface p-5"
+            >
+              <p className="flex-1 text-xl text-fg">“{p.quote}”</p>
+              <p className="mt-auto pt-3 hud-label">{p.source}</p>
             </li>
           ))}
         </ul>

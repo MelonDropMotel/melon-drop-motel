@@ -6,6 +6,7 @@ import { formatAirDate, ytThumb, cn } from "@/lib/utils";
 import { getChannelVideos } from "@/lib/youtube";
 import { getPodcastEpisodes } from "@/lib/podcast";
 import { MotelSign } from "@/components/motel-sign";
+import { TvArt } from "@/components/tv-art";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
@@ -32,7 +33,9 @@ function Home() {
           className="absolute inset-0 h-full w-full object-cover opacity-35"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/70 to-bg/30" />
-        <div className="relative flex flex-col items-center px-5 py-12 text-center sm:py-20">
+        <div className="relative grid items-center gap-6 px-5 py-10 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10 lg:px-12">
+          <TvArt className="mx-auto w-full max-w-[20rem] sm:max-w-[26rem] lg:order-2 lg:max-w-[34rem]" />
+          <div className="flex flex-col items-center text-center lg:order-1 lg:items-start lg:text-left">
           <p className="hud-label text-primary">
             Current Events · Movies and Television · Unintelligible Rambling
           </p>
@@ -45,7 +48,7 @@ function Home() {
             {SITE.tagline} Tyler and Rusty, giving their thoughtful insight on
             just about everything. Weekly, on the motel TV.
           </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <div className="mt-6 flex flex-wrap justify-center gap-3 lg:justify-start">
             <Button asChild>
               <Link to="/watch">Watch the latest</Link>
             </Button>
@@ -60,6 +63,7 @@ function Home() {
                 <Link to="/about">Meet the guys</Link>
               </Button>
             )}
+          </div>
           </div>
         </div>
       </section>
