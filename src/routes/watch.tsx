@@ -70,18 +70,20 @@ function Watch() {
         </h1>
       </div>
 
-      {onTapes ? (
-        currentTape ? (
-          <TapeDeck tape={currentTape} autoPlay={Boolean(tapeId)} />
+      {/* player + its description: one connected frame */}
+      <div className="video-card">
+        {onTapes ? (
+          currentTape ? (
+            <TapeDeck tape={currentTape} autoPlay={Boolean(tapeId)} />
+          ) : (
+            <p className="video-card-body text-muted">No tapes on the rack yet.</p>
+          )
         ) : (
-          <p className="text-muted">No tapes on the rack yet.</p>
-        )
-      ) : (
-        <TubePlayer video={current} autoPlay={Boolean(v)} />
-      )}
+          <TubePlayer video={current} autoPlay={Boolean(v)} />
+        )}
 
-      {!onTapes ? (
-        <div className="rounded-[10px] bg-surface p-5 shadow-border">
+        {!onTapes ? (
+        <div className="video-card-body">
           <p className="hud-label">
             {current.kind === "episode" && current.ep
               ? `EP.${String(current.ep).padStart(3, "0")}`
@@ -96,8 +98,9 @@ function Watch() {
           ) : null}
         </div>
       ) : currentTape?.blurb ? (
-        <p className="max-w-3xl rounded-[10px] bg-surface p-5 text-muted shadow-border">{currentTape.blurb}</p>
+        <p className="video-card-body text-muted">{currentTape.blurb}</p>
       ) : null}
+      </div>
 
       {onTapes ? <ListenBadges /> : null}
 

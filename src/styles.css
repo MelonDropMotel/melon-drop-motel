@@ -442,3 +442,10 @@ html { background: #0d0b0c; }   /* overscroll / rubber-band area stays dark */
 :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
   outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: 8px;
 }
+
+/* video + its description in ONE frame: shared border/background, video flush at the top
+   (rounded top corners from the card), description directly below, no gap */
+.video-card { overflow: hidden; border-radius: 10px; background: var(--color-surface); box-shadow: var(--shadow-border); }
+.video-card > .crt-bezel { padding: 0; border-radius: 0; background: #050405; box-shadow: none; }
+.video-card > .crt-bezel > .crt-screen { border-radius: 0; }
+.video-card-body { padding: 1rem 1.25rem 1.25rem; border-top: 1px solid rgb(var(--shift-rgb) / 0.22); }
