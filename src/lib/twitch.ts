@@ -5,6 +5,8 @@ export type TwitchVod = {
   id: string;
   title: string;
   date: string;
+  /** full ISO start time */
+  startedAt: string;
   seconds: number;
   thumb: string;
 };
@@ -71,6 +73,7 @@ function parse(json: unknown): TwitchChannel {
       id: String(n.id),
       title: n.title ?? "",
       date: (n.publishedAt ?? "").slice(0, 10),
+      startedAt: n.publishedAt ?? "",
       seconds: Number(n.lengthSeconds ?? 0),
       thumb: n.previewThumbnailURL ?? "",
     }));
@@ -107,6 +110,9 @@ async function pull(fresh = false): Promise<TwitchChannel> {
     return cache?.data ?? empty();
   }
 }
+
+/** server-side direct call (used by lib/live.ts) */
+export const loadTwitchChannel = (fresh = false) => pull(fresh);
 
 export const getTwitchChannel = createServerFn({ method: "GET" })
   .validator((d: unknown) => {

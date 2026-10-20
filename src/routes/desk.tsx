@@ -106,7 +106,7 @@ function Desk() {
       <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:grid-cols-1 lg:gap-16">
         <div className="order-2 md:order-1">
           <p className="hud-label">Front desk</p>
-          <h1 className="font-display text-5xl tracking-[0.08em] chromatic sm:text-7xl">
+          <h1 className="font-display text-5xl tracking-[0.08em] neon sm:text-7xl">
             Ring the bell
           </h1>
           <p className="mt-3 max-w-2xl text-muted">
@@ -131,15 +131,6 @@ function Desk() {
           <label>
             <span className="hud-label">City</span>
             <input name="city" className={`mt-1 ${field}`} />
-          </label>
-          <label>
-            <span className="hud-label">What is this</span>
-            <select name="kind" className={`mt-1 ${field}`}>
-              <option value="Live show">Live show</option>
-              <option value="Podcast guest">Podcast guest</option>
-              <option value="Weird purpose">Weird purpose</option>
-              <option value="Suggestion">Suggestion</option>
-            </select>
           </label>
           <label className="lg:flex lg:flex-1 lg:flex-col">
             <span className="hud-label">Note</span>

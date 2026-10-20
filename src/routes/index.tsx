@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { formatAirDate, ytThumb, cn } from "@/lib/utils";
 import { getChannelVideos } from "@/lib/youtube";
 import { getPodcastEpisodes } from "@/lib/podcast";
+import { MotelSign } from "@/components/motel-sign";
+import { TvArt } from "@/components/tv-art";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
@@ -24,27 +26,29 @@ function Home() {
 
   return (
     <div className="flex flex-col gap-14">
-      <section className="relative overflow-hidden bg-bg shadow-border">
+      <section className="relative overflow-hidden bg-bg/70 shadow-border">
         <img
           src="/images/banner.jpg"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
+          className="absolute inset-0 h-full w-full object-cover opacity-35"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/70 to-bg/40" />
-        <div className="relative flex flex-col items-center px-5 py-12 text-center sm:py-16">
-          <p className="hud-label text-primary">
+        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/70 to-bg/30" />
+        <div className="relative grid items-center gap-6 px-5 py-10 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10 lg:px-12">
+          <p className="hud-label hero-kicker text-primary lg:col-span-2">
             Current Events · Movies and Television · Unintelligible Rambling
           </p>
+          <TvArt className="mx-auto w-full max-w-[20rem] sm:max-w-[26rem] lg:col-start-2 lg:row-start-2 lg:max-w-[34rem]" />
+          <div className="flex flex-col items-center text-center lg:col-start-1 lg:row-start-2 lg:items-start lg:text-left">
           <img
             src="/images/lockup.png"
             alt={SITE.name}
-            className="mark mt-5 w-80 sm:w-96"
+            className="mark w-80 sm:w-96"
           />
           <p className="mt-5 max-w-lg text-xl text-fg sm:text-2xl">
             {SITE.tagline} Tyler and Rusty, giving their thoughtful insight on
             just about everything. Weekly, on the motel TV.
           </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <div className="mt-6 flex flex-wrap justify-center gap-3 lg:justify-start">
             <Button asChild>
               <Link to="/watch">Watch the latest</Link>
             </Button>
@@ -59,6 +63,7 @@ function Home() {
                 <Link to="/about">Meet the guys</Link>
               </Button>
             )}
+          </div>
           </div>
         </div>
       </section>
@@ -77,19 +82,21 @@ function Home() {
         </div>
 
         <div className="grid items-stretch gap-6 lg:grid-cols-[minmax(0,1.7fr)_minmax(19rem,1fr)]">
-          <div className="flex h-full min-h-0 min-w-0 flex-col">
+          <div className="video-card flex h-full min-h-0 min-w-0 flex-col">
             <TubePlayer video={latest} />
-            <p className="mt-3 shrink-0 text-sm tracking-[0.08em] text-muted">
-              {formatAirDate(latest.date)}
-            </p>
-            {latest.blurb ? (
-              <p className="mt-2 min-h-0 flex-1 overflow-hidden whitespace-pre-line text-muted">
-                {latest.blurb}
+            <div className="video-card-body flex min-h-0 flex-1 flex-col">
+              <p className="shrink-0 text-sm tracking-[0.08em] text-muted">
+                {formatAirDate(latest.date)}
               </p>
-            ) : null}
+              {latest.blurb ? (
+                <p className="mt-2 min-h-0 flex-1 overflow-hidden whitespace-pre-line text-muted">
+                  {latest.blurb}
+                </p>
+              ) : null}
+            </div>
           </div>
 
-          <aside className="flex flex-col bg-surface shadow-border">
+          <aside className="flex flex-col overflow-hidden bg-surface shadow-border">
             <p className="hud-label px-4 pt-4 lg:hidden">TV guide</p>
             <ul className="flex flex-1 flex-col">
               {strip.map((ep) => {
@@ -107,7 +114,7 @@ function Home() {
                       <img
                         src={ytThumb(ep.id)}
                         alt=""
-                        className="h-16 w-[6.75rem] shrink-0 object-cover"
+                        className="h-16 w-[6.75rem] shrink-0 rounded-md object-cover"
                       />
                       <span className="min-w-0 flex-1">
                         {ep.ep ? (
@@ -138,7 +145,7 @@ function Home() {
       </section>
 
       <section className="grid gap-6 md:grid-cols-2">
-        <Link to="/about" className="group relative overflow-hidden bg-bg shadow-border">
+        <Link to="/about" className="group relative overflow-hidden bg-surface shadow-border">
           <img
             src="/images/mark.png"
             alt="Tyler and Rusty as comedy and tragedy masks"
@@ -151,13 +158,11 @@ function Home() {
             </p>
           </div>
         </Link>
-        <Link to="/shop" className="group relative overflow-hidden shadow-border">
-          <img
-            src="/images/crt-snow.jpg"
-            alt="Television static"
-            className="h-72 w-full object-cover transition-transform duration-200 group-hover:scale-[1.03]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg to-transparent" />
+        <Link to="/shop" className="theme-panel group relative overflow-hidden">
+          <div className="flex h-72 items-start justify-center p-6 transition-transform duration-200 group-hover:scale-[1.03]">
+            <MotelSign className="w-[13rem] max-w-full" />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/20 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-5">
             <p className="hud-label">Gift shop</p>
             <p className="font-display text-4xl tracking-[0.08em]">
@@ -182,17 +187,21 @@ function Home() {
         <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {clips.slice(0, 3).map((clip) => (
             <li key={clip.id}>
-              <Link to="/watch" search={{ v: clip.id }} className="block">
+              <Link
+                to="/watch"
+                search={{ v: clip.id }}
+                className="block h-full overflow-hidden bg-surface pb-4 shadow-border hover:shadow-border-hover"
+              >
                 <img
                   src={ytThumb(clip.id)}
                   alt=""
                   className="aspect-video w-full object-cover"
                 />
-                <p className="mt-2 font-display text-2xl tracking-[0.06em]">
+                <p className="mt-3 px-4 font-display text-2xl tracking-[0.06em]">
                   {clip.title}
                 </p>
                 {clip.blurb ? (
-                  <p className="mt-1 line-clamp-3 whitespace-pre-line text-muted">
+                  <p className="mt-1 line-clamp-3 whitespace-pre-line px-4 text-muted">
                     {clip.blurb}
                   </p>
                 ) : null}

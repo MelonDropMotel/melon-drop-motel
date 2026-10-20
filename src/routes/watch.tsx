@@ -10,11 +10,15 @@ import { ListenBadges } from "@/components/listen-badges";
 import { cn, formatAirDate, ytThumb } from "@/lib/utils";
 import { getChannelVideos } from "@/lib/youtube";
 import { getPodcastEpisodes } from "@/lib/podcast";
+import { Pager } from "@/components/pager";
+import { paginate, pageParam } from "@/lib/paginate";
+import { pageHead } from "@/lib/page-head";
 
 const searchSchema = z.object({
   v: z.string().optional(),
   tape: z.string().optional(),
   tab: z.enum(["episodes", "clips", "tapes"]).optional(),
+  page: z.coerce.number().int().min(1).optional().catch(undefined),
 });
 
 export const Route = createFileRoute("/watch")({
@@ -26,6 +30,7 @@ export const Route = createFileRoute("/watch")({
     ]);
     return { ...catalog, tapes };
   },
+  head: ({ match }) => pageHead("Watch", "/watch", match.search as Record<string, unknown>, ["page"]),
   component: Watch,
 });
 
@@ -33,7 +38,7 @@ type Tab = "episodes" | "clips" | "tapes";
 
 function Watch() {
   const catalog = Route.useLoaderData();
-  const { v, tape: tapeId, tab: tabQ } = Route.useSearch();
+  const { v, tape: tapeId, tab: tabQ, page } = Route.useSearch();
 
   const current = useMemo((): Video => {
     if (!v) return catalog.latest;
@@ -61,6 +66,9 @@ function Watch() {
 
   const list = tab === "episodes" ? catalog.episodes : tab === "clips" ? catalog.clips : null;
   const onTapes = tab === "tapes";
+  const slice = paginate(onTapes ? catalog.tapes.length : (list?.length ?? 0), page);
+  const tapesPage = catalog.tapes.slice(slice.start, slice.end);
+  const listPage = list?.slice(slice.start, slice.end);
 
   return (
     <div className="flex flex-col gap-8">
@@ -70,18 +78,20 @@ function Watch() {
         </h1>
       </div>
 
-      {onTapes ? (
-        currentTape ? (
-          <TapeDeck tape={currentTape} autoPlay={Boolean(tapeId)} />
+      {/* player + its description: one connected frame */}
+      <div className="video-card">
+        {onTapes ? (
+          currentTape ? (
+            <TapeDeck tape={currentTape} autoPlay={Boolean(tapeId)} />
+          ) : (
+            <p className="video-card-body text-muted">No tapes on the rack yet.</p>
+          )
         ) : (
-          <p className="text-muted">No tapes on the rack yet.</p>
-        )
-      ) : (
-        <TubePlayer video={current} autoPlay={Boolean(v)} />
-      )}
+          <TubePlayer video={current} autoPlay={Boolean(v)} />
+        )}
 
-      {!onTapes ? (
-        <div>
+        {!onTapes ? (
+        <div className="video-card-body">
           <p className="hud-label">
             {current.kind === "episode" && current.ep
               ? `EP.${String(current.ep).padStart(3, "0")}`
@@ -96,8 +106,9 @@ function Watch() {
           ) : null}
         </div>
       ) : currentTape?.blurb ? (
-        <p className="max-w-3xl text-muted">{currentTape.blurb}</p>
+        <p className="video-card-body text-muted">{currentTape.blurb}</p>
       ) : null}
+      </div>
 
       {onTapes ? <ListenBadges /> : null}
 
@@ -118,10 +129,10 @@ function Watch() {
               tab: key,
             })}
             className={cn(
-              "inline-flex h-11 items-center px-4 font-display text-xl tracking-[0.12em] uppercase",
+              "inline-flex h-11 items-center rounded-md px-4 font-display text-xl tracking-[0.12em] uppercase",
               tab === key
                 ? "bg-primary text-bg"
-                : "text-muted shadow-border hover:text-fg",
+                : "bg-surface text-muted shadow-border hover:text-fg",
             )}
           >
             {label}
@@ -129,17 +140,19 @@ function Watch() {
         ))}
       </div>
 
+      <div id="watch-list" className="scroll-mt-24">
       {onTapes ? (
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {catalog.tapes.map((item) => {
+          {tapesPage.map((item) => {
             const active = item.id === currentTape?.id;
             return (
               <li key={item.id}>
                 <Link
                   to="/watch"
-                  search={{ tape: item.id, tab: "tapes" }}
+                  search={{ tape: item.id, tab: "tapes", page: pageParam(slice.page) }}
+                  resetScroll={false}
                   className={cn(
-                    "flex h-full flex-col overflow-hidden p-4 transition-[box-shadow] duration-150",
+                    "flex h-full flex-col overflow-hidden bg-surface p-4 transition-[box-shadow] duration-150",
                     active ? "shadow-border-hover" : "shadow-border hover:shadow-border-hover",
                   )}
                 >
@@ -162,15 +175,15 @@ function Watch() {
         </ul>
       ) : (
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {list?.map((item) => {
+          {listPage?.map((item) => {
             const active = item.id === current.id;
             return (
               <li key={item.id}>
                 <Link
                   to="/watch"
-                  search={{ v: item.id, tab }}
+                  search={{ v: item.id, tab, page: pageParam(slice.page) }}
                   className={cn(
-                    "flex h-full flex-col overflow-hidden transition-[box-shadow] duration-150",
+                    "flex h-full flex-col overflow-hidden bg-surface transition-[box-shadow] duration-150",
                     active ? "shadow-border-hover" : "shadow-border hover:shadow-border-hover",
                   )}
                 >
@@ -181,11 +194,11 @@ function Watch() {
                       className="aspect-video w-full object-cover"
                     />
                     {item.ep ? (
-                      <span className="absolute left-2 top-2 bg-primary px-2 py-0.5 font-display text-lg tracking-[0.12em] text-bg">
+                      <span className="absolute left-2 top-2 rounded bg-primary px-2 py-0.5 font-display text-lg tracking-[0.12em] text-bg">
                         EP.{String(item.ep).padStart(3, "0")}
                       </span>
                     ) : (
-                      <span className="absolute left-2 top-2 bg-bg/80 px-2 py-0.5 font-display text-lg tracking-[0.12em] text-primary">
+                      <span className="absolute left-2 top-2 rounded bg-bg/80 px-2 py-0.5 font-display text-lg tracking-[0.12em] text-primary">
                         {item.kind === "track" ? "TRACK" : "CLIP"}
                       </span>
                     )}
@@ -209,6 +222,12 @@ function Watch() {
           })}
         </ul>
       )}
+      <Pager
+        slice={slice}
+        anchorId="watch-list"
+        label={tab === "tapes" ? "Tape pages" : tab === "clips" ? "Clip pages" : "Episode pages"}
+      />
+      </div>
     </div>
   );
 }

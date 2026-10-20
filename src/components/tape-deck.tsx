@@ -34,6 +34,7 @@ function HeadUnitViz({ playing, clock }: { playing: boolean; clock: number }) {
       ctx.clearRect(0, 0, w, h);
       const gap = 2;
       const bw = (w - gap * (BARS - 1)) / BARS;
+      const accent = `rgb(${getComputedStyle(document.documentElement).getPropertyValue("--shift-rgb").trim() || "0 255 181"})`;
       const t = playing ? now / 260 + clockRef.current * 1.7 : clockRef.current * 0.2;
       for (let i = 0; i < BARS; i++) {
         const n =
@@ -45,7 +46,7 @@ function HeadUnitViz({ playing, clock }: { playing: boolean; clock: number }) {
         const x = i * (bw + gap);
         const y = h - bh;
         ctx.fillStyle =
-          level > 0.78 ? "rgb(243,235,227)" : "rgb(0,255,181)";
+          level > 0.78 ? "rgb(243,235,227)" : accent;
         ctx.fillRect(x, y, bw, bh);
       }
       raf = requestAnimationFrame(draw);

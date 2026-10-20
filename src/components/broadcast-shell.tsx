@@ -6,6 +6,8 @@ import { NAV, LATEST, SITE, type Video } from "@/data/site";
 import { cn, pad2 } from "@/lib/utils";
 import { BootSequence } from "@/components/boot-sequence";
 import { getChannelVideos } from "@/lib/youtube";
+import { StreamTheme } from "@/components/stream-theme";
+import { VacancySign } from "@/components/vacancy-sign";
 
 function useClock() {
   const [now, setNow] = useState<string>("");
@@ -101,7 +103,7 @@ function NewsTicker({ text }: { text: string }) {
   return (
     <div
       ref={wrapRef}
-      className="hidden overflow-hidden border-t border-fg/10 bg-bg md:block"
+      className="site-ticker hidden overflow-hidden border-t border-primary/30 bg-bg/85 md:block"
     >
       <span
         ref={probeRef}
@@ -165,11 +167,12 @@ export function BroadcastShell({ children }: { children: React.ReactNode }) {
   const tickerLoop = `${ticker}   ·   `;
 
   return (
-    <div className="scanlines min-h-dvh bg-bg text-fg">
+    <div className="site-shell scanlines min-h-dvh text-fg">
+      <StreamTheme />
       <BootSequence />
       <StaticBurst />
 
-      <header className="sticky top-0 z-20 overflow-x-clip border-b border-fg/10 bg-bg/95">
+      <header className="sticky top-0 z-20 overflow-x-clip border-b border-primary/25 bg-bg/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-2 px-3 py-2">
           <Link to="/" className="flex h-12 shrink-0 items-center gap-2 py-1 pr-2">
             <img
@@ -182,6 +185,8 @@ export function BroadcastShell({ children }: { children: React.ReactNode }) {
             </span>
           </Link>
 
+          <VacancySign className="ml-auto shrink-0 pl-3 text-xs tracking-[0.14em] md:hidden" />
+
           <div className="ml-auto hidden min-w-max items-center md:flex">
             <nav className="flex items-center justify-end" aria-label="Menu">
               {NAV.map((c) => (
@@ -189,8 +194,7 @@ export function BroadcastShell({ children }: { children: React.ReactNode }) {
               ))}
             </nav>
             <span className="hidden shrink-0 items-center gap-3 pl-2 text-sm tracking-[0.16em] text-primary lg:flex">
-              <span className="rec-dot size-2 rounded-full bg-primary" />
-              <span>VACANCY</span>
+              <VacancySign />
               <span className="tabular-nums text-muted">{clock || "--:--:--"}</span>
             </span>
           </div>
@@ -204,7 +208,7 @@ export function BroadcastShell({ children }: { children: React.ReactNode }) {
       <NewsTicker text={tickerLoop} />
 
       <nav
-        className="fixed inset-x-0 bottom-0 z-20 flex overflow-x-auto border-t border-fg/10 bg-bg/95 md:hidden"
+        className="fixed inset-x-0 bottom-0 z-20 flex overflow-x-auto border-t border-primary/25 bg-bg/90 backdrop-blur-md md:hidden"
         aria-label="Menu"
       >
         {NAV.map((c) => (
