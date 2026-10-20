@@ -183,10 +183,12 @@ export function WikiPlinko({
 
     function paint(t: number) {
       if (!ctx) return;
+      // theme accent from the colour shift (teal until it runs)
+      const ACC = `rgb(${getComputedStyle(document.documentElement).getPropertyValue("--shift-rgb").trim() || "0 255 181"})`;
       ctx.fillStyle = "#050405";
       ctx.fillRect(0, 0, W, H);
 
-      ctx.fillStyle = "#00ffb5";
+      ctx.fillStyle = ACC;
       ctx.fillRect(0, 0, W, HEADER);
       ctx.fillStyle = "#1a1416";
       ctx.fillRect(0, HEADER, W, 4);
@@ -198,7 +200,7 @@ export function WikiPlinko({
       ctx.fillStyle = "#1a1416";
       ctx.fillRect(0, HEADER + 4, WALL, H);
       ctx.fillRect(W - WALL, HEADER + 4, WALL, H);
-      ctx.fillStyle = "#00ffb5";
+      ctx.fillStyle = ACC;
       ctx.fillRect(WALL - 2, HEADER + 4, 2, H);
       ctx.fillRect(W - WALL, HEADER + 4, 2, H);
 
@@ -214,7 +216,7 @@ export function WikiPlinko({
         const x = Math.round(MARGIN + i * SLOT_W);
         const on = lit === i;
         const pulse = on && Math.floor(t / 140) % 2 === 0;
-        ctx.fillStyle = on ? (pulse ? "#00ffb5" : "#f3ebe3") : "#1a1416";
+        ctx.fillStyle = on ? (pulse ? ACC : "#f3ebe3") : "#1a1416";
         ctx.fillRect(x + 3, floor + 3, Math.round(SLOT_W) - 6, H - floor - 6);
         ctx.fillStyle = on && !pulse ? "#050405" : "#f3ebe3";
         ctx.font = "13px VT323, ui-monospace, monospace";
@@ -320,7 +322,7 @@ export function WikiPlinko({
         }
       }
 
-      pixelDisc(puck.x, puck.y, PUCK_R, green ? "#2f9e44" : "#00ffb5");
+      pixelDisc(puck.x, puck.y, PUCK_R, green ? "#2f9e44" : ACC);
       pixelDisc(puck.x - 4, puck.y - 4, 4, "#f3ebe3");
     }
 

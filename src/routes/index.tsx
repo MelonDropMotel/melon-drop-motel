@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { formatAirDate, ytThumb, cn } from "@/lib/utils";
 import { getChannelVideos } from "@/lib/youtube";
 import { getPodcastEpisodes } from "@/lib/podcast";
+import { MotelSign } from "@/components/motel-sign";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
@@ -24,14 +25,14 @@ function Home() {
 
   return (
     <div className="flex flex-col gap-14">
-      <section className="relative overflow-hidden bg-bg shadow-border">
+      <section className="relative overflow-hidden bg-bg/70 shadow-border">
         <img
           src="/images/banner.jpg"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
+          className="absolute inset-0 h-full w-full object-cover opacity-35"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/70 to-bg/40" />
-        <div className="relative flex flex-col items-center px-5 py-12 text-center sm:py-16">
+        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/70 to-bg/30" />
+        <div className="relative flex flex-col items-center px-5 py-12 text-center sm:py-20">
           <p className="hud-label text-primary">
             Current Events · Movies and Television · Unintelligible Rambling
           </p>
@@ -79,17 +80,19 @@ function Home() {
         <div className="grid items-stretch gap-6 lg:grid-cols-[minmax(0,1.7fr)_minmax(19rem,1fr)]">
           <div className="flex h-full min-h-0 min-w-0 flex-col">
             <TubePlayer video={latest} />
-            <p className="mt-3 shrink-0 text-sm tracking-[0.08em] text-muted">
-              {formatAirDate(latest.date)}
-            </p>
-            {latest.blurb ? (
-              <p className="mt-2 min-h-0 flex-1 overflow-hidden whitespace-pre-line text-muted">
-                {latest.blurb}
+            <div className="mt-3 flex min-h-0 flex-1 flex-col rounded-[10px] bg-surface p-4 shadow-border">
+              <p className="shrink-0 text-sm tracking-[0.08em] text-muted">
+                {formatAirDate(latest.date)}
               </p>
-            ) : null}
+              {latest.blurb ? (
+                <p className="mt-2 min-h-0 flex-1 overflow-hidden whitespace-pre-line text-muted">
+                  {latest.blurb}
+                </p>
+              ) : null}
+            </div>
           </div>
 
-          <aside className="flex flex-col bg-surface shadow-border">
+          <aside className="flex flex-col overflow-hidden bg-surface shadow-border">
             <p className="hud-label px-4 pt-4 lg:hidden">TV guide</p>
             <ul className="flex flex-1 flex-col">
               {strip.map((ep) => {
@@ -107,7 +110,7 @@ function Home() {
                       <img
                         src={ytThumb(ep.id)}
                         alt=""
-                        className="h-16 w-[6.75rem] shrink-0 object-cover"
+                        className="h-16 w-[6.75rem] shrink-0 rounded-md object-cover"
                       />
                       <span className="min-w-0 flex-1">
                         {ep.ep ? (
@@ -138,7 +141,7 @@ function Home() {
       </section>
 
       <section className="grid gap-6 md:grid-cols-2">
-        <Link to="/about" className="group relative overflow-hidden bg-bg shadow-border">
+        <Link to="/about" className="group relative overflow-hidden bg-surface shadow-border">
           <img
             src="/images/mark.png"
             alt="Tyler and Rusty as comedy and tragedy masks"
@@ -151,13 +154,11 @@ function Home() {
             </p>
           </div>
         </Link>
-        <Link to="/shop" className="group relative overflow-hidden shadow-border">
-          <img
-            src="/images/crt-snow.jpg"
-            alt="Television static"
-            className="h-72 w-full object-cover transition-transform duration-200 group-hover:scale-[1.03]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg to-transparent" />
+        <Link to="/shop" className="theme-panel group relative overflow-hidden">
+          <div className="flex h-72 items-start justify-center p-6 transition-transform duration-200 group-hover:scale-[1.03]">
+            <MotelSign className="w-[13rem] max-w-full" />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/20 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-5">
             <p className="hud-label">Gift shop</p>
             <p className="font-display text-4xl tracking-[0.08em]">
@@ -182,17 +183,21 @@ function Home() {
         <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {clips.slice(0, 3).map((clip) => (
             <li key={clip.id}>
-              <Link to="/watch" search={{ v: clip.id }} className="block">
+              <Link
+                to="/watch"
+                search={{ v: clip.id }}
+                className="block h-full overflow-hidden bg-surface pb-4 shadow-border hover:shadow-border-hover"
+              >
                 <img
                   src={ytThumb(clip.id)}
                   alt=""
                   className="aspect-video w-full object-cover"
                 />
-                <p className="mt-2 font-display text-2xl tracking-[0.06em]">
+                <p className="mt-3 px-4 font-display text-2xl tracking-[0.06em]">
                   {clip.title}
                 </p>
                 {clip.blurb ? (
-                  <p className="mt-1 line-clamp-3 whitespace-pre-line text-muted">
+                  <p className="mt-1 line-clamp-3 whitespace-pre-line px-4 text-muted">
                     {clip.blurb}
                   </p>
                 ) : null}

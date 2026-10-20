@@ -16,6 +16,16 @@
   --shadow-border-hover: 0 0 0 1px #00ffb58c;
   --shadow-crt: inset 0 0 40px #0000008c, inset 0 0 80px #00ffb514,
     0 0 0 1px #f3ebe314;
+  --color-red: #ff3b3b;
+}
+
+/* theme-shift v2: tokens follow the colour shift (--shift-rgb is set by StreamTheme; teal until it runs) */
+:root {
+  --shift-rgb: 0 255 181;
+  --color-surface: rgb(22 17 19 / 0.82);
+  --shadow-border: 0 0 0 1px rgb(var(--shift-rgb) / 0.22), 0 8px 24px #00000059;
+  --shadow-border-hover: 0 0 0 1px rgb(var(--shift-rgb) / 0.75), 0 0 22px rgb(var(--shift-rgb) / 0.22), 0 8px 24px #00000059;
+  --shadow-crt: inset 0 0 40px #0000008c, inset 0 0 80px rgb(var(--shift-rgb) / 0.08), 0 0 0 1px #f3ebe314;
 }
 
 @layer base {
@@ -104,7 +114,7 @@
   opacity: 0;
   background-image: linear-gradient(
     #0000 0%,
-    #00ffb50d 42%,
+    rgb(var(--shift-rgb) / 0.05) 42%,
     #f3ebe329 50%,
     #50c86e0f 58%,
     #0000 100%
@@ -228,7 +238,7 @@
 }
 
 .chromatic {
-  text-shadow: 2px 0 #00ffb5b3;
+  text-shadow: 2px 0 rgb(var(--shift-rgb) / 0.7);
 }
 
 @supports (color: color-mix(in lab, red, red)) {
@@ -386,4 +396,49 @@
   .wiki-print {
     animation: none !important;
   }
+}
+
+/* =====================================================================
+   theme-shift v2: one full-viewport background video + themed accents
+   ===================================================================== */
+html { background: #0d0b0c; }   /* overscroll / rubber-band area stays dark */
+
+/* ONE fixed layer the size of the viewport: never scrolls, never tiles, no edges.
+   lvh = the largest viewport (mobile URL bar hidden), so it never comes up short when the bar collapses. */
+.site-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100lvh; z-index: 0;
+  overflow: hidden; pointer-events: none; background: #0d0b0c; }
+.site-bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; outline: none; }
+.site-bg-night { filter: hue-rotate(var(--bg-hue, 0deg)) saturate(var(--bg-sat, 1)); }
+.site-bg-shade { position: absolute; inset: 0;
+  background: radial-gradient(ellipse 120% 90% at 50% 40%, #0000 40%, #0d0b0c80 100%), #0d0b0ca6; }
+.site-shell { position: relative; background: transparent; }
+.site-shell > header, .site-shell > main, .site-shell > .site-ticker { position: relative; z-index: 1; }
+.site-shell > header { position: sticky; z-index: 20; }
+
+/* teal art (kit wordmark, tower) turned to the theme, like the kit's accent filter */
+.shift-art { filter: hue-rotate(var(--shift-hue, 0deg)) saturate(var(--shift-sat, 1)); }
+
+/* rounded, website-style cards */
+.shadow-border, .shadow-border-hover { border-radius: 10px; }
+
+/* themed panel used where the generated photos were */
+.theme-panel { position: relative; overflow: hidden; border-radius: 10px; background:
+  radial-gradient(ellipse 70% 90% at 85% 50%, rgb(var(--shift-rgb) / 0.16), #0000 70%),
+  linear-gradient(135deg, rgb(22 17 19 / 0.92), rgb(13 11 12 / 0.92)); box-shadow: var(--shadow-border); }
+
+/* tuned tower copies (kit themeImages): crossfaded by --tw-purple / --tw-green */
+@layer components {
+  .tower-wrap { position: relative; display: block; }
+}
+.tower-wrap > .tower-tweak { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tower-wrap > .tower-base { opacity: calc(1 - var(--tw-purple, 0) - var(--tw-green, 0)); }
+.tower-wrap > .tower-tweak.purple { opacity: var(--tw-purple, 0); }
+.tower-wrap > .tower-tweak.green { opacity: var(--tw-green, 0); }
+
+.neon { color: var(--color-primary); text-shadow: 0 0 6px rgb(var(--shift-rgb) / 0.6), 0 0 22px rgb(var(--shift-rgb) / 0.3); }
+.dot-red { background: var(--color-red) !important; box-shadow: 0 0 8px var(--color-red); }
+
+/* keyboard focus ring in the theme colour */
+:is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: 8px;
 }

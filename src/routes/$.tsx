@@ -5,13 +5,7 @@ export const Route = createFileRoute("/$")({ component: NotFound });
 
 function NotFound() {
   return (
-    <div className="relative overflow-hidden shadow-border">
-      <img
-        src="/images/motel-night.jpg"
-        alt="Motel breezeway at night"
-        className="h-[min(70vh,640px)] w-full object-cover"
-      />
-      <div className="absolute inset-0 bg-bg/70" />
+    <div className="theme-panel relative h-[min(70vh,640px)]">
       <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
         <img
           src="/images/mark.png"

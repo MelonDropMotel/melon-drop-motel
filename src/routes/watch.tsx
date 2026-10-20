@@ -81,7 +81,7 @@ function Watch() {
       )}
 
       {!onTapes ? (
-        <div>
+        <div className="rounded-[10px] bg-surface p-5 shadow-border">
           <p className="hud-label">
             {current.kind === "episode" && current.ep
               ? `EP.${String(current.ep).padStart(3, "0")}`
@@ -96,7 +96,7 @@ function Watch() {
           ) : null}
         </div>
       ) : currentTape?.blurb ? (
-        <p className="max-w-3xl text-muted">{currentTape.blurb}</p>
+        <p className="max-w-3xl rounded-[10px] bg-surface p-5 text-muted shadow-border">{currentTape.blurb}</p>
       ) : null}
 
       {onTapes ? <ListenBadges /> : null}
@@ -118,10 +118,10 @@ function Watch() {
               tab: key,
             })}
             className={cn(
-              "inline-flex h-11 items-center px-4 font-display text-xl tracking-[0.12em] uppercase",
+              "inline-flex h-11 items-center rounded-md px-4 font-display text-xl tracking-[0.12em] uppercase",
               tab === key
                 ? "bg-primary text-bg"
-                : "text-muted shadow-border hover:text-fg",
+                : "bg-surface text-muted shadow-border hover:text-fg",
             )}
           >
             {label}
@@ -139,7 +139,7 @@ function Watch() {
                   to="/watch"
                   search={{ tape: item.id, tab: "tapes" }}
                   className={cn(
-                    "flex h-full flex-col overflow-hidden p-4 transition-[box-shadow] duration-150",
+                    "flex h-full flex-col overflow-hidden bg-surface p-4 transition-[box-shadow] duration-150",
                     active ? "shadow-border-hover" : "shadow-border hover:shadow-border-hover",
                   )}
                 >
@@ -170,7 +170,7 @@ function Watch() {
                   to="/watch"
                   search={{ v: item.id, tab }}
                   className={cn(
-                    "flex h-full flex-col overflow-hidden transition-[box-shadow] duration-150",
+                    "flex h-full flex-col overflow-hidden bg-surface transition-[box-shadow] duration-150",
                     active ? "shadow-border-hover" : "shadow-border hover:shadow-border-hover",
                   )}
                 >
@@ -181,11 +181,11 @@ function Watch() {
                       className="aspect-video w-full object-cover"
                     />
                     {item.ep ? (
-                      <span className="absolute left-2 top-2 bg-primary px-2 py-0.5 font-display text-lg tracking-[0.12em] text-bg">
+                      <span className="absolute left-2 top-2 rounded bg-primary px-2 py-0.5 font-display text-lg tracking-[0.12em] text-bg">
                         EP.{String(item.ep).padStart(3, "0")}
                       </span>
                     ) : (
-                      <span className="absolute left-2 top-2 bg-bg/80 px-2 py-0.5 font-display text-lg tracking-[0.12em] text-primary">
+                      <span className="absolute left-2 top-2 rounded bg-bg/80 px-2 py-0.5 font-display text-lg tracking-[0.12em] text-primary">
                         {item.kind === "track" ? "TRACK" : "CLIP"}
                       </span>
                     )}

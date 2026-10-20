@@ -105,11 +105,11 @@ function Live() {
 
   return (
     <div className="flex flex-col gap-10">
-      <section className="relative overflow-hidden shadow-border">
+      <section className="relative overflow-hidden bg-bg/70 shadow-border">
         <img
-          src="/images/crt-snow.jpg"
-          alt="A CRT television showing analog snow"
-          className="h-72 w-full object-cover"
+          src="/images/banner.jpg"
+          alt=""
+          className="h-72 w-full object-cover opacity-60"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/50 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8">
@@ -134,9 +134,9 @@ function Live() {
           </div>
           <span className="flex items-center gap-2 text-sm tracking-[0.16em]">
             <span
-              className={`rec-dot size-2 rounded-full ${twitch.live ? "bg-primary" : "bg-muted"}`}
+              className={`rec-dot size-2 rounded-full ${twitch.live ? "dot-red" : "bg-muted"}`}
             />
-            <span className={twitch.live ? "text-primary" : "text-muted"}>
+            <span className={twitch.live ? "text-[var(--color-red)]" : "text-muted"}>
               {twitch.live
                 ? `LIVE${twitch.viewers ? ` · ${twitch.viewers}` : ""}`
                 : "OFF AIR"}
@@ -202,13 +202,14 @@ function Live() {
         )}
       </section>
 
-      <section className="relative overflow-hidden shadow-border">
+      <section className="theme-panel relative h-64">
         <img
-          src="/images/motel-night.jpg"
-          alt="Motel breezeway at night"
-          className="h-64 w-full object-cover"
+          src="/images/mockup/wordmark-type-teal.png"
+          alt=""
+          width={573}
+          height={426}
+          className="shift-art mark absolute right-6 top-1/2 hidden h-48 w-auto -translate-y-1/2 opacity-90 sm:block"
         />
-        <div className="absolute inset-0 bg-bg/60" />
         <div className="absolute inset-0 flex flex-col items-start justify-end p-6">
           <p className="hud-label">Book a night</p>
           <p className="max-w-lg font-display text-4xl tracking-[0.08em]">

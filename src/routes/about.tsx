@@ -53,7 +53,7 @@ function About() {
         <p className="hud-label">Press, sort of</p>
         <ul className="mt-4 grid gap-4 md:grid-cols-3">
           {PRESS.map((p) => (
-            <li key={p.source} className="border-l-2 border-primary bg-surface p-5">
+            <li key={p.source} className="rounded-[10px] border-l-2 border-primary bg-surface p-5">
               <p className="text-xl text-fg">“{p.quote}”</p>
               <p className="mt-3 hud-label">{p.source}</p>
             </li>
@@ -61,13 +61,12 @@ function About() {
         </ul>
       </section>
 
-      <section className="relative overflow-hidden shadow-border">
+      <section className="theme-panel relative h-64 sm:h-80">
         <img
-          src="/images/motel-room-v2.jpg"
-          alt="Motel room with a glowing CRT"
-          className="h-64 w-full object-cover sm:h-80"
+          src="/images/lockup.png"
+          alt=""
+          className="mark absolute right-6 top-1/2 hidden h-44 w-auto -translate-y-1/2 opacity-90 sm:block lg:h-56"
         />
-        <div className="absolute inset-0 bg-bg/55" />
         <div className="absolute inset-0 flex flex-col items-start justify-end p-6">
           <p className="hud-label">Booking</p>
           <p className="font-display text-4xl tracking-[0.08em]">
