@@ -1,9 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
-import { CLIPS, EPISODES, LATEST, SITE, type Video } from "@/data/site";
+import { CLIPS, EPISODES, LATEST, SITE, TRACKS, type Video } from "@/data/site";
 
 export type ChannelCatalog = {
   episodes: Video[];
   clips: Video[];
+  tracks: Video[];
   latest: Video;
 };
 
@@ -51,6 +52,10 @@ function cleanTitle(raw: string) {
 
 function isClipTitle(raw: string) {
   return /\[\s*MDM\s*CLIPS?\s*\]/i.test(raw);
+}
+
+function isTrackTitle(raw: string) {
+  return /\[\s*MDM\s*:?\s*STUDIOS?\s*\]/i.test(raw);
 }
 
 function isShortEntry(body: string, rawTitle: string, desc: string) {
@@ -123,11 +128,12 @@ function knownEpisodes() {
 }
 
 function fallback(): ChannelCatalog {
-  return { episodes: EPISODES, clips: CLIPS, latest: LATEST };
+  return { episodes: EPISODES, clips: CLIPS, tracks: TRACKS, latest: LATEST };
 }
 
 export function mergeFeed(xml: string): ChannelCatalog {
   const known = knownEpisodes();
+  const knownTracks = new Map(TRACKS.map((t) => [t.id, t]));
   const entries = [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)];
   const fromFeed: Video[] = [];
 
@@ -139,6 +145,19 @@ export function mergeFeed(xml: string): ChannelCatalog {
     const desc = decode(
       body.match(/<media:description>([\s\S]*?)<\/media:description>/)?.[1] ?? "",
     ).trim();
+    // mdm studio music tracks get their own list; never mixed into clips or episodes.
+    if (isTrackTitle(rawTitle)) {
+      fromFeed.push(
+        knownTracks.get(id) ?? {
+          id,
+          date: published ? pacificDate(published) : "",
+          kind: "track",
+          title: cleanTitle(rawTitle) || rawTitle,
+          blurb: cleanDescription(desc),
+        },
+      );
+      continue;
+    }
     const isShort = isShortEntry(body, rawTitle, desc);
     const isClip = isShort || isClipTitle(rawTitle);
     const parsed = isClip ? null : episodeFromTitle(rawTitle);
@@ -182,8 +201,12 @@ export function mergeFeed(xml: string): ChannelCatalog {
       title: cleanTitle(c.title) || c.title,
     })),
   ].sort((a, b) => b.date.localeCompare(a.date));
+  const tracks = [
+    ...fromFeed.filter((v) => v.kind === "track"),
+    ...TRACKS.filter((t) => !seen.has(t.id)),
+  ].sort((a, b) => b.date.localeCompare(a.date));
   const latest = episodes[0] ?? fromFeed[0] ?? LATEST;
-  return { episodes, clips, latest };
+  return { episodes, clips, tracks, latest };
 }
 
 async function pull(fresh = false): Promise<ChannelCatalog> {

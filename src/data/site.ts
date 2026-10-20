@@ -481,6 +481,114 @@ export const CLIPS: Video[] = [
   },
 ];
 
+/** mdm studio: original music tracks ([MDM: STUDIO] uploads). Never mixed into CLIPS. */
+export const TRACKS: Video[] = [
+  {
+    id: "L-3V7qeLEro",
+    title: "Slop is Back",
+    date: "2025-12-27",
+    blurb:
+      "Written at MDM Studios.\nVisually produced by the local artists on Grok. It's free, in case you hadn't been aware. Anyone can drain an ocean.\nDisclaimer:\nThe words/ actions of Melon Boy do not directly reflect the views of the Melon Drop Motel.",
+    kind: "track",
+  },
+  {
+    id: "tRIW3z5Qo78",
+    title: "Geometry Mash",
+    date: "2025-09-23",
+    blurb:
+      "Written at MDM Studios.\nChill, Lofi, Pysch-Electronic, Deep House, Alternative stuff. Clearly inspired lol.\nWe've used this one for a bit but haven't posted the full track. Check it out.",
+    kind: "track",
+  },
+  {
+    id: "VF-sZ8zn330",
+    title: "Yellow Meat",
+    date: "2025-08-13",
+    blurb:
+      "Written at MDM Studios.\nChill, Lofi, Pysch-Electronic, Alternative stuff. Mostly ambient. Check it out.",
+    kind: "track",
+  },
+  {
+    id: "KtrFXNBNtGg",
+    title: "Truth Seeker",
+    date: "2025-06-24",
+    blurb:
+      "Written at MDM Studios.\nChill, Lofi, Pysch-Electronic, Alternative stuff. Mostly ambient. Free for streaming use, please credit Check it out.",
+    kind: "track",
+  },
+  {
+    id: "ndr2tLpzn-0",
+    title: "Rusty's Headache",
+    date: "2025-06-17",
+    blurb:
+      "Written at MDM Studios.\nChill, Lofi, Pysch-Electronic, Alternative stuff. Check it out.",
+    kind: "track",
+  },
+  {
+    id: "nppvmpdu0Zo",
+    title: "Flux & Flow",
+    date: "2025-06-03",
+    blurb:
+      "Written at MDM Studios.\nChill, Space-y, Adventure Electronic-Alternative stuff. Check it out.",
+    kind: "track",
+  },
+  {
+    id: "FGdIcB-V6g0",
+    title: "Crimewave Beat",
+    date: "2025-05-27",
+    blurb:
+      "Written at MDM Studios.\nChill, Beat Cop, Electronic-HipHop stuff. Check it out.",
+    kind: "track",
+  },
+  {
+    id: "LeR9rpusudk",
+    title: "Orbital Green",
+    date: "2025-05-20",
+    blurb:
+      "Written at MDM Studios.\nChill, Lofi, Pysch-Electronic, Alternative stuff. Check it out.",
+    kind: "track",
+  },
+  {
+    id: "IfxPdDNcHGY",
+    title: "Grape Soda",
+    date: "2025-05-13",
+    blurb:
+      "Written at MDM Studios.\nChill, Spooky Electronic-HipHop stuff. Check it out.",
+    kind: "track",
+  },
+  {
+    id: "Vpu323OI1cA",
+    title: "New Guinea Bones",
+    date: "2025-04-24",
+    blurb:
+      "Written at MDM Studios.\nChill Vaporwave-Lofi-Alternative-HipHop stuff. It's a fun one, check it out.",
+    kind: "track",
+  },
+  {
+    id: "p4svLmMtkKI",
+    title: "Swarm",
+    date: "2025-04-17",
+    blurb:
+      "Written at MDM Studios.\nElectronic-Alternative-Rock stuff. Check it out.",
+    kind: "track",
+  },
+  {
+    id: "EuEj2UTgqYk",
+    title: "Freeze Dried",
+    date: "2025-04-12",
+    blurb:
+      "Written at MDM Studios.\nChill Electronic-HipHop stuff. Check it out.",
+    kind: "track",
+  },
+  {
+    id: "0rQ1yWWimuo",
+    title: "PonderBot",
+    date: "2025-04-07",
+    blurb:
+      "Written at MDM Studios.\nChill Vaporwave-Lofi-HipHop stuff. Check it out.",
+    kind: "track",
+  },
+];
+
 export const LATEST = EPISODES[0];
 
 export type Product = {

@@ -17,7 +17,7 @@ import { pageHead } from "@/lib/page-head";
 const searchSchema = z.object({
   v: z.string().optional(),
   tape: z.string().optional(),
-  tab: z.enum(["episodes", "clips", "tapes"]).optional(),
+  tab: z.enum(["episodes", "clips", "studio", "tapes"]).optional(),
   page: z.coerce.number().int().min(1).optional().catch(undefined),
 });
 
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/watch")({
   component: Watch,
 });
 
-type Tab = "episodes" | "clips" | "tapes";
+type Tab = "episodes" | "clips" | "studio" | "tapes";
 
 function Watch() {
   const catalog = Route.useLoaderData();
@@ -45,6 +45,7 @@ function Watch() {
     return (
       catalog.episodes.find((e) => e.id === v) ||
       catalog.clips.find((c) => c.id === v) ||
+      catalog.tracks.find((t) => t.id === v) ||
       catalog.latest ||
       LATEST
     );
@@ -62,9 +63,18 @@ function Watch() {
       ? "tapes"
       : catalog.clips.some((c) => c.id === current.id)
         ? "clips"
-        : "episodes");
+        : catalog.tracks.some((t) => t.id === current.id)
+          ? "studio"
+          : "episodes");
 
-  const list = tab === "episodes" ? catalog.episodes : tab === "clips" ? catalog.clips : null;
+  const list =
+    tab === "episodes"
+      ? catalog.episodes
+      : tab === "clips"
+        ? catalog.clips
+        : tab === "studio"
+          ? catalog.tracks
+          : null;
   const onTapes = tab === "tapes";
   const slice = paginate(onTapes ? catalog.tapes.length : (list?.length ?? 0), page);
   const tapesPage = catalog.tapes.slice(slice.start, slice.end);
@@ -117,6 +127,7 @@ function Watch() {
           [
             ["episodes", "Episodes"],
             ["clips", "Clips & shorts"],
+            ["studio", "mdm studio"],
             ["tapes", "Tapes"],
           ] as const
         ).map(([key, label]) => (
@@ -225,7 +236,15 @@ function Watch() {
       <Pager
         slice={slice}
         anchorId="watch-list"
-        label={tab === "tapes" ? "Tape pages" : tab === "clips" ? "Clip pages" : "Episode pages"}
+        label={
+          tab === "tapes"
+            ? "Tape pages"
+            : tab === "clips"
+              ? "Clip pages"
+              : tab === "studio"
+                ? "Track pages"
+                : "Episode pages"
+        }
       />
       </div>
     </div>

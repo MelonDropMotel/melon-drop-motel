@@ -40,6 +40,7 @@ export async function buildSitemapXml() {
     url("/", { changefreq: "daily", priority: "1.0" }),
     url("/watch", { changefreq: "daily", priority: "0.9" }),
     url("/watch?tab=clips", { changefreq: "weekly", priority: "0.7" }),
+    url("/watch?tab=studio", { changefreq: "weekly", priority: "0.6" }),
     url("/watch?tab=tapes", { changefreq: "daily", priority: "0.8" }),
     url("/live", { changefreq: "daily", priority: "0.7" }),
     url("/wiki", { changefreq: "weekly", priority: "0.5" }),
@@ -63,6 +64,15 @@ export async function buildSitemapXml() {
         lastmod: clip.date || undefined,
         changefreq: "monthly",
         priority: "0.6",
+      }),
+    );
+  }
+  for (const track of catalog.tracks) {
+    pages.push(
+      url(`/watch?v=${encodeURIComponent(track.id)}&tab=studio`, {
+        lastmod: track.date || undefined,
+        changefreq: "monthly",
+        priority: "0.5",
       }),
     );
   }
