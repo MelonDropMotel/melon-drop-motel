@@ -450,9 +450,8 @@ html { background: #0d0b0c; }   /* overscroll / rubber-band area stays dark */
 .video-card > .crt-bezel > .crt-screen { border-radius: 0; }
 .video-card-body { padding: 1rem 1.25rem 1.25rem; border-top: 1px solid rgb(var(--shift-rgb) / 0.22); }
 
-/* Tyler's TV piece: alpha-keyed web derivative of the kit's tv1-*.mp4 (see components/tv-art.tsx) */
-.tv-art { position: relative; aspect-ratio: 1152 / 1024;
-  filter: drop-shadow(0 0 10px rgb(var(--shift-rgb) / 0.75)) drop-shadow(0 0 34px rgb(var(--shift-rgb) / 0.35)); }
+/* Tyler's TV piece: the kit's tv1-*.mp4 with its black keyed out in WebGL (see components/tv-art.tsx); the halo is the video's own */
+.tv-art { position: relative; aspect-ratio: 1152 / 1024; }
 .tv-art-layer { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .2s; pointer-events: none; }
 .tv-art-src { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
@@ -476,9 +475,8 @@ html { background: #0d0b0c; }   /* overscroll / rubber-band area stays dark */
 .pager-btn.is-disabled { opacity: 0.4; pointer-events: none; }
 
 /* Home hero kicker: always one straight line (scales down on narrow phones instead of wrapping) */
-.hero-kicker { white-space: nowrap; text-align: center; font-size: clamp(0.6rem, 2.95vw, 0.95rem); letter-spacing: 0.02em; }
-@media (min-width: 640px) { .hero-kicker { letter-spacing: 0.16em; } }
-@media (min-width: 1024px) { .hero-kicker { text-align: left; } }
+.hero-kicker { white-space: nowrap; text-align: center; justify-self: center; font-size: clamp(0.5rem, 2.85vw, 1.32rem); letter-spacing: 0.02em; }
+@media (min-width: 640px) { .hero-kicker { letter-spacing: 0.08em; } }
 
 @layer components {
 /* Header VACANCY / NO VACANCY neon (components/vacancy-sign.tsx) */
