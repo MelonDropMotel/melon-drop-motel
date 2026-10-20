@@ -450,14 +450,11 @@ html { background: #0d0b0c; }   /* overscroll / rubber-band area stays dark */
 .video-card > .crt-bezel > .crt-screen { border-radius: 0; }
 .video-card-body { padding: 1rem 1.25rem 1.25rem; border-top: 1px solid rgb(var(--shift-rgb) / 0.22); }
 
-/* Tyler's TV piece (stream kit tv1-*.mp4, on pure black): screen-blended over the page */
-.tv-art { position: relative; aspect-ratio: 1152 / 1024; isolation: auto; }
-.tv-art-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; outline: none; pointer-events: none; }
-/* black under the TV's screen (the white bezel covers its edges), so the screen and the faces stay black */
-.tv-art-backing { position: absolute; left: 12%; top: 28.5%; width: 48.5%; height: 55.5%; background: #000; border-radius: 16% / 18%; }
-/* theme-coloured halo behind the body, follows the colour shift */
-.tv-art-glow { position: absolute; left: 10%; top: 23%; width: 80%; height: 68%; border-radius: 10%;
-  box-shadow: 0 0 30px 8px rgb(var(--shift-rgb) / 0.75), 0 0 70px 14px rgb(var(--shift-rgb) / 0.25); filter: blur(10px); }
+/* Tyler's TV piece: alpha-keyed web derivative of the kit's tv1-*.mp4 (see components/tv-art.tsx) */
+.tv-art { position: relative; aspect-ratio: 1152 / 1024;
+  filter: drop-shadow(0 0 10px rgb(var(--shift-rgb) / 0.75)) drop-shadow(0 0 34px rgb(var(--shift-rgb) / 0.35)); }
+.tv-art-layer { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .2s; pointer-events: none; }
+.tv-art-src { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
 /* Live: off-air state with the TV piece, platform badges */
 .offair-panel { display: grid; justify-items: center; align-items: center; gap: 1.5rem; padding: 2rem 1.25rem; border-radius: 10px;
@@ -477,7 +474,30 @@ html { background: #0d0b0c; }   /* overscroll / rubber-band area stays dark */
 .pager-btn:hover, .pager-num:hover { color: var(--color-fg); box-shadow: var(--shadow-border-hover); }
 .pager-num.is-current { background: var(--color-primary); color: var(--color-bg); box-shadow: 0 0 14px rgb(var(--shift-rgb) / 0.45); }
 .pager-btn.is-disabled { opacity: 0.4; pointer-events: none; }
-/* feather the TV video's own box and crush its near-black (decoded H.264 black is ~2-4, which screen-blends to a faint rectangle) */
-.tv-art-video { filter: contrast(1.06) brightness(0.97);
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 4%, #000 96%, transparent);
-  -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 4%, #000 96%, transparent); mask-composite: intersect; }
+
+/* Home hero kicker: always one straight line (scales down on narrow phones instead of wrapping) */
+.hero-kicker { white-space: nowrap; text-align: center; font-size: clamp(0.6rem, 2.95vw, 0.95rem); letter-spacing: 0.02em; }
+@media (min-width: 640px) { .hero-kicker { letter-spacing: 0.16em; } }
+@media (min-width: 1024px) { .hero-kicker { text-align: left; } }
+
+@layer components {
+/* Header VACANCY / NO VACANCY neon (components/vacancy-sign.tsx) */
+.vacancy { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--color-primary); }
+.vacancy-dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--color-primary);
+  box-shadow: 0 0 8px rgb(var(--shift-rgb) / 0.8); animation: rec-blink 1.6s steps(2, start) infinite; }
+.vacancy.is-no .vacancy-dot { background: transparent; box-shadow: inset 0 0 0 1.5px rgb(var(--shift-rgb) / 0.55); animation: none; }
+.vacancy-box { display: inline-grid; justify-items: start; }
+.vacancy-box > * { grid-area: 1 / 1; white-space: nowrap; }
+.vacancy-reserve { visibility: hidden; }
+.vacancy-text { position: relative; text-shadow: 0 0 8px rgb(var(--shift-rgb) / 0.6); }
+.vacancy.is-no .vacancy-text { color: var(--color-fg); text-shadow: 0 0 6px rgb(var(--shift-rgb) / 0.45); }
+.vacancy-text::before, .vacancy-text::after { content: attr(data-text); position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.vacancy.is-glitch .vacancy-text { animation: vac-jitter 0.09s steps(2) infinite, vac-flicker 0.6s linear; }
+.vacancy.is-glitch .vacancy-text::before { opacity: 0.85; color: rgb(var(--shift-rgb)); mix-blend-mode: screen; animation: vac-split-a 0.12s steps(2) infinite; }
+.vacancy.is-glitch .vacancy-text::after { opacity: 0.7; color: #fff; mix-blend-mode: screen; animation: vac-split-b 0.1s steps(2) infinite; }
+}
+@keyframes vac-jitter { 0% { transform: translate(0, 0); } 50% { transform: translate(1px, -1px) skewX(-6deg); } 100% { transform: translate(-1px, 1px); } }
+@keyframes vac-flicker { 0%, 18%, 22%, 48%, 52%, 80%, 100% { opacity: 1; } 20%, 50% { opacity: 0.25; } 82% { opacity: 0.6; } }
+@keyframes vac-split-a { 0% { transform: translate(-3px, 0); clip-path: inset(0 0 55% 0); } 100% { transform: translate(2px, 0); clip-path: inset(40% 0 0 0); } }
+@keyframes vac-split-b { 0% { transform: translate(3px, 1px); clip-path: inset(50% 0 0 0); } 100% { transform: translate(-2px, -1px); clip-path: inset(0 0 45% 0); } }
+@media (prefers-reduced-motion: reduce) { .vacancy-dot { animation: none; } }

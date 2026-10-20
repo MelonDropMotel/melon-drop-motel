@@ -34,15 +34,15 @@ function Home() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/70 to-bg/30" />
         <div className="relative grid items-center gap-6 px-5 py-10 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10 lg:px-12">
-          <TvArt className="mx-auto w-full max-w-[20rem] sm:max-w-[26rem] lg:order-2 lg:max-w-[34rem]" />
-          <div className="flex flex-col items-center text-center lg:order-1 lg:items-start lg:text-left">
-          <p className="hud-label text-primary">
+          <p className="hud-label hero-kicker text-primary lg:col-span-2">
             Current Events · Movies and Television · Unintelligible Rambling
           </p>
+          <TvArt className="mx-auto w-full max-w-[20rem] sm:max-w-[26rem] lg:col-start-2 lg:row-start-2 lg:max-w-[34rem]" />
+          <div className="flex flex-col items-center text-center lg:col-start-1 lg:row-start-2 lg:items-start lg:text-left">
           <img
             src="/images/lockup.png"
             alt={SITE.name}
-            className="mark mt-5 w-80 sm:w-96"
+            className="mark w-80 sm:w-96"
           />
           <p className="mt-5 max-w-lg text-xl text-fg sm:text-2xl">
             {SITE.tagline} Tyler and Rusty, giving their thoughtful insight on

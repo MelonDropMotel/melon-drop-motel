@@ -7,6 +7,7 @@ import { cn, pad2 } from "@/lib/utils";
 import { BootSequence } from "@/components/boot-sequence";
 import { getChannelVideos } from "@/lib/youtube";
 import { StreamTheme } from "@/components/stream-theme";
+import { VacancySign } from "@/components/vacancy-sign";
 
 function useClock() {
   const [now, setNow] = useState<string>("");
@@ -184,6 +185,8 @@ export function BroadcastShell({ children }: { children: React.ReactNode }) {
             </span>
           </Link>
 
+          <VacancySign className="ml-auto shrink-0 pl-3 text-xs tracking-[0.14em] md:hidden" />
+
           <div className="ml-auto hidden min-w-max items-center md:flex">
             <nav className="flex items-center justify-end" aria-label="Menu">
               {NAV.map((c) => (
@@ -191,8 +194,7 @@ export function BroadcastShell({ children }: { children: React.ReactNode }) {
               ))}
             </nav>
             <span className="hidden shrink-0 items-center gap-3 pl-2 text-sm tracking-[0.16em] text-primary lg:flex">
-              <span className="rec-dot size-2 rounded-full bg-primary" />
-              <span>VACANCY</span>
+              <VacancySign />
               <span className="tabular-nums text-muted">{clock || "--:--:--"}</span>
             </span>
           </div>
