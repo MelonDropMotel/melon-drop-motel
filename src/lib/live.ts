@@ -260,8 +260,12 @@ async function youtubeKeyless(channel: string): Promise<{ live: LiveNow["youtube
 export const LIVE_MOCKS = ["twitch", "youtube", "both", "off"] as const;
 export type LiveMock = (typeof LIVE_MOCKS)[number];
 
-/** never in production; on for local dev and Vercel preview deployments */
-export const mockAllowed = () => env("VERCEL_ENV") !== "production";
+/** never in production: only Vercel preview deployments or a non-production (dev) server */
+export const mockAllowed = () => {
+  const v = env("VERCEL_ENV");
+  if (v) return v === "preview";
+  return env("NODE_ENV") !== "production";
+};
 
 function mockState(kind: LiveMock): LiveState {
   const ep = EPISODES.slice(0, 4);
