@@ -42,9 +42,9 @@ function Home() {
           <img
             src="/images/lockup.png"
             alt={SITE.name}
-            className="mark w-80 sm:w-96"
+            className="mark w-80 sm:w-96 max-md:sr-only"
           />
-          <p className="mt-5 max-w-lg text-xl text-fg sm:text-2xl">
+          <p className="mt-5 max-w-lg text-xl text-fg max-md:-mt-2 sm:text-2xl">
             {SITE.tagline} Tyler and Rusty, giving their thoughtful insight on
             just about everything. Weekly, on the motel TV.
           </p>
