@@ -9,6 +9,9 @@ const APP_NAME = SITE.name;
 const DESC =
   "Just two idiots, polluting the internet. Tyler and Rusty's comedy podcast. Weekly, on the motel TV.";
 const OG = `${SITE.url}/og.jpg`;
+const LEGACY_POLYFILLS =
+  "Object.hasOwn||Object.defineProperty(Object,'hasOwn',{configurable:true,writable:true,value:function(o,k){return Object.prototype.hasOwnProperty.call(o,k)}});" +
+  "[Array,String].forEach(function(C){C.prototype.at||Object.defineProperty(C.prototype,'at',{configurable:true,writable:true,value:function(n){n=Math.trunc(n)||0;if(n<0)n+=this.length;return n<0||n>=this.length?undefined:this[n]}})});";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -50,6 +53,9 @@ export const Route = createRootRoute({
       { rel: "apple-touch-icon", href: "/__grok/icon-180.png" },
       { rel: "sitemap", type: "application/xml", href: "/sitemap.xml" },
     ],
+    // Tiny polyfills for Safari/iOS 15.0–15.3: the router's hydration code calls
+    // Object.hasOwn (15.4+). No-ops everywhere else.
+    scripts: [{ children: LEGACY_POLYFILLS }],
   }),
   component: () => (
     <html lang="en" className="antialiased" suppressHydrationWarning>
