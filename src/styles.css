@@ -145,6 +145,22 @@
 }
 
 @layer components {
+  .coming-soon-pill {
+    display: inline-block;
+    flex-shrink: 0;
+    white-space: nowrap;
+    border-radius: 9999px;
+    padding: 0.1rem 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    color: var(--color-primary);
+    color: rgb(var(--shift-rgb, 0 255 181));
+    background: rgb(var(--shift-rgb, 0 255 181) / 0.1);
+    box-shadow: 0 0 0 1px rgb(var(--shift-rgb, 0 255 181) / 0.55);
+  }
+
   .hud-label {
     font-family: var(--font-mono);
     letter-spacing: 0.16em;
@@ -499,3 +515,8 @@ html { background: #0d0b0c; }   /* overscroll / rubber-band area stays dark */
 @keyframes vac-split-a { 0% { transform: translate(-3px, 0); clip-path: inset(0 0 55% 0); } 100% { transform: translate(2px, 0); clip-path: inset(40% 0 0 0); } }
 @keyframes vac-split-b { 0% { transform: translate(3px, 1px); clip-path: inset(50% 0 0 0); } 100% { transform: translate(-2px, -1px); clip-path: inset(0 0 45% 0); } }
 @media (prefers-reduced-motion: reduce) { .vacancy-dot { animation: none; } }
+
+/* Viewport-unit fallbacks for Safari/iOS < 15.4 (no dvh/lvh): the minifier keeps only the
+   modern value when both are written, so the plain-vh fallback sits behind @supports. */
+@supports not (height: 100lvh) { .site-bg { height: 100vh; } }
+@supports not (min-height: 100dvh) { .site-shell { min-height: 100vh; } }
