@@ -81,15 +81,15 @@ function Home() {
           <p className="hud-label hidden lg:block">TV guide</p>
         </div>
 
-        <div className="grid items-stretch gap-6 lg:grid-cols-[minmax(0,1.7fr)_minmax(19rem,1fr)]">
-          <div className="video-card flex h-full min-h-0 min-w-0 flex-col">
+        <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1.7fr)_minmax(19rem,1fr)] lg:items-stretch">
+          <div className="video-card flex min-w-0 flex-col lg:h-full lg:min-h-0">
             <TubePlayer video={latest} />
-            <div className="video-card-body flex min-h-0 flex-1 flex-col">
+            <div className="video-card-body flex flex-col lg:min-h-0 lg:flex-1">
               <p className="shrink-0 text-sm tracking-[0.08em] text-muted">
                 {formatAirDate(latest.date)}
               </p>
               {latest.blurb ? (
-                <p className="mt-2 min-h-0 flex-1 overflow-hidden whitespace-pre-line text-muted">
+                <p className="mt-2 whitespace-pre-line text-muted lg:min-h-0 lg:flex-1 lg:overflow-hidden">
                   {latest.blurb}
                 </p>
               ) : null}
@@ -98,7 +98,7 @@ function Home() {
 
           <aside className="flex flex-col overflow-hidden bg-surface shadow-border">
             <p className="hud-label px-4 pt-4 lg:hidden">TV guide</p>
-            <ul className="flex flex-1 flex-col">
+            <ul className="flex flex-col lg:flex-1">
               {strip.map((ep) => {
                 const on = ep.id === latest.id;
                 return (

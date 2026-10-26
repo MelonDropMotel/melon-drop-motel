@@ -193,6 +193,17 @@ export default defineConfig(({ command, isPreview }) => ({
     strictPort: true,
   },
   resolve: { tsconfigPaths: true },
+  // Browser floor for the client bundle and its CSS. Vite's default ("baseline widely
+  // available": Safari 16.4) lets Tailwind v4's output keep media-query range syntax
+  // (`@media (width>=64rem)`), which Safari/iOS 15.x–16.3 drop entirely, so every
+  // sm:/md:/lg: utility vanished on older iPads. Listing Safari/iOS 15 here makes the
+  // CSS minifier (Lightning CSS) rewrite those to min-width/max-width queries and keep
+  // the 100vh fallbacks next to dvh/lvh; JS syntax is lowered to match. Modern browsers
+  // get equivalent rules, so nothing changes for them.
+  build: {
+    target: ["es2020", "chrome111", "edge111", "firefox114", "safari15", "ios15"],
+    cssTarget: ["chrome111", "edge111", "firefox114", "safari15", "ios15"],
+  },
   plugins: [
     pgliteBootstrapPlugin(),
     // Before tanstackStart so /auth/popup never falls through to the SPA.

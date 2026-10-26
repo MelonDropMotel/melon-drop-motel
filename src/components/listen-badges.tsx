@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 const BADGES = [
   {
     id: "spotify",
@@ -24,16 +22,19 @@ const BADGES = [
 ] as const;
 
 export function ListenBadges() {
-  const [soon, setSoon] = useState<string | null>(null);
-
   return (
     <div>
       <p className="hud-label mb-3">Also on</p>
-      <ul className="grid max-w-[16.75rem] grid-cols-1 items-start gap-x-3 gap-y-8 pb-6 sm:max-w-[37rem] sm:grid-cols-3">
+      <ul className="flex flex-wrap items-center gap-x-6 gap-y-4 pb-6">
         {BADGES.map((b) => (
-          <li key={b.id} className="relative min-w-0">
+          <li key={b.id} className="flex min-w-0 items-center gap-2">
             {b.href ? (
-              <a href={b.href} target="_blank" rel="noreferrer" className="quiet block w-full">
+              <a
+                href={b.href}
+                target="_blank"
+                rel="noreferrer"
+                className="quiet block w-[12rem] shrink-0"
+              >
                 <img
                   src={b.src}
                   alt={b.alt}
@@ -41,27 +42,18 @@ export function ListenBadges() {
                 />
               </a>
             ) : (
-              <button
-                type="button"
-                className="quiet block w-full"
-                onClick={() => setSoon(b.id)}
-                aria-label={`${b.alt} (coming soon)`}
-              >
-                <img
-                  src={b.src}
-                  alt={b.alt}
-                  className="block aspect-[268/56] h-auto w-full outline-none"
-                />
-              </button>
-            )}
-            {b.href ? null : (
-              <p
-                className={`absolute left-0 top-full mt-1 text-sm tracking-[0.08em] ${
-                  soon === b.id ? "text-muted" : "invisible"
-                }`}
-              >
-                Coming soon
-              </p>
+              <>
+                <span className="block w-[12rem] shrink-0 opacity-80">
+                  <img
+                    src={b.src}
+                    alt={`${b.alt} (coming soon)`}
+                    className="block aspect-[268/56] h-auto w-full outline-none"
+                  />
+                </span>
+                <span className="coming-soon-pill" aria-hidden="true">
+                  Coming soon
+                </span>
+              </>
             )}
           </li>
         ))}

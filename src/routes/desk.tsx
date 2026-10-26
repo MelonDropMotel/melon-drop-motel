@@ -116,7 +116,7 @@ function Desk() {
         <MotelSign className="order-1 mx-auto w-full max-w-[18rem] md:order-2 md:max-w-none lg:hidden" />
       </div>
 
-      <section className="grid gap-8 lg:grid-cols-2">
+      <section className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <form onSubmit={onBook} className="flex flex-col gap-3 bg-surface p-5 shadow-border">
           <p className="hud-label">Booking</p>
           <h2 className="font-display text-3xl tracking-[0.08em]">HIT US UP</h2>
