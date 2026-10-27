@@ -50,6 +50,15 @@ export type Video = {
 
 export const EPISODES: Video[] = [
   {
+    id: "M8kx5LJKZNM",
+    ep: 32,
+    title: "The Mom Is Generally Female",
+    date: "2026-10-26",
+    blurb:
+      "Ayyyoo we're back again, nothing can stop us. We talk about McDonalds, Adrien Broner drinking his puke, alien human hybrids and more. Tyler gets really sweaty. Rusty still can't talk. Chaos ensues.",
+    kind: "episode",
+  },
+  {
     id: "8cAWJz6Lp7Q",
     ep: 31,
     title: "Getting Indigenous with Columbus",
