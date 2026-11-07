@@ -50,6 +50,15 @@ export type Video = {
 
 export const EPISODES: Video[] = [
   {
+    id: "LoRm9gt2quc",
+    ep: 33,
+    title: "Don't Get Used to This",
+    date: "2026-11-06",
+    blurb:
+      "We're celebrating Halloween, in person.  It's rad. Fresh off some Chinese food, we discuss new indian movies, start some podcast wars and talk out our butts on the latest headlines.",
+    kind: "episode",
+  },
+  {
     id: "M8kx5LJKZNM",
     ep: 32,
     title: "The Mom Is Generally Female",
